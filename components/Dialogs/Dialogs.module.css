@@ -1,12 +1,20 @@
 .dialogs {
     display: grid;
     grid-template-columns: 2fr 10fr;
+    padding: 20px;
 }
 
 .dialogsItems {
     padding: 10px;
     text-decoration: none;
     color: white;
+    align-content: center;
+}
+
+.dialogsItems img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
 }
 
 .dialogsItems .active {
