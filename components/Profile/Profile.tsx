@@ -1,12 +1,9 @@
 import React from 'react';
-import {MyPosts, postPropsType} from "./MyPosts/MyPosts";
+import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
+import {ProfilePageType} from '../../redux/state'
 
-type dataPropsType = {
-    posts: Array<postPropsType>
-}
-
-export function Profile(props: dataPropsType) {
+export function Profile(props: ProfilePageType) {
 
     return (
         <div>
