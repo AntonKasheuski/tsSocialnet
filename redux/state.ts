@@ -48,8 +48,8 @@ let state = {
         posts: [
             {id: 1, post: "Hi, how are you?", likesCount: 15},
             {id: 2, post: "It's my first post", likesCount: 20}
-        ]},
-
+        ]
+    }
 }
 
 export default state;
