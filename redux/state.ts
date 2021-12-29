@@ -11,7 +11,9 @@ export type PostType = {
     post: string,
     likesCount: number
 }
-export type SidebarType = {}
+export type SidebarType = {
+    friends: Array<DialogType>
+}
 export type MessagesPageType = {
     dialogs: Array<DialogType>,
     messages: Array<MessageType>
@@ -26,7 +28,13 @@ export type RootStateType = {
 }
 
 let state = {
-    sidebar: {},
+    sidebar: {
+        friends: [
+            {id: 1, name: 'Sasha'},
+            {id: 2, name: 'Viktor'},
+            {id: 3, name: 'Antonio'},
+        ]
+    },
     messagesPage: {
         dialogs: [
             {id: 1, name: 'Daria'},
@@ -34,22 +42,32 @@ let state = {
             {id: 3, name: 'Petya'},
             {id: 4, name: 'Sasha'},
             {id: 5, name: 'Viktor'},
-            {id: 6, name: 'Antonio'}
+            {id: 6, name: 'Antonio'},
         ],
         messages: [
             {id: 1, message: 'Hi!'},
             {id: 2, message: 'Hey!'},
             {id: 3, message: 'Yo!'},
             {id: 4, message: 'Yo!'},
-            {id: 5, message: 'Yo!'}
+            {id: 5, message: 'Yo!'},
         ]
     },
     profilePage: {
         posts: [
             {id: 1, post: "Hi, how are you?", likesCount: 15},
-            {id: 2, post: "It's my first post", likesCount: 20}
+            {id: 2, post: "It's my first post", likesCount: 20},
+            {id: 3, post: "Bla-bla", likesCount: 30}
         ]
     }
+}
+
+export const addPost = (postText: string) => {
+    const newPost: PostType = {
+        id: 4,
+        post: postText,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost)
 }
 
 export default state;

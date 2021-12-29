@@ -8,13 +8,9 @@ import {Routes, Route} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
-import {RootStateType} from "./redux/state";
+import state, {addPost} from "./redux/state";
 
-type stateType = {
-    state: RootStateType
-}
-
-function App(props: stateType) {
+function App() {
 
     return (
             <div className='app-wrapper'>
@@ -22,8 +18,8 @@ function App(props: stateType) {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path="/profile" element={<Profile posts={props.state.profilePage.posts} />}/>
-                        <Route path="/dialogs" element={<Dialogs dialogsData={props.state.messagesPage} />}/>
+                        <Route path="/profile" element={<Profile posts={state.profilePage.posts} addPost={addPost} />}/>
+                        <Route path="/dialogs" element={<Dialogs dialogsData={state.messagesPage} />}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>
