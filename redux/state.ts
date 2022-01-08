@@ -1,3 +1,5 @@
+import {renderTree} from "../render";
+
 export type DialogType = {
     id: number,
     name: string
@@ -16,9 +18,11 @@ export type SidebarType = {
 }
 export type MessagesPageType = {
     dialogs: Array<DialogType>,
+    newMessageText: string,
     messages: Array<MessageType>
 }
 export type ProfilePageType = {
+    newPostText: string,
     posts: Array<PostType>
 }
 export type RootStateType = {
@@ -44,6 +48,7 @@ let state = {
             {id: 5, name: 'Viktor'},
             {id: 6, name: 'Antonio'},
         ],
+        newMessageText: "",
         messages: [
             {id: 1, message: 'Hi!'},
             {id: 2, message: 'Hey!'},
@@ -53,6 +58,7 @@ let state = {
         ]
     },
     profilePage: {
+        newPostText: "",
         posts: [
             {id: 1, post: "Hi, how are you?", likesCount: 15},
             {id: 2, post: "It's my first post", likesCount: 20},
@@ -61,13 +67,35 @@ let state = {
     }
 }
 
-export const addPost = (postText: string) => {
+export const newPostTextUpdating = (newPostText: string) => {
+    state.profilePage.newPostText = newPostText
+    renderTree();
+}
+
+export const addPost = () => {
     const newPost: PostType = {
         id: 4,
-        post: postText,
+        post: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText = ""
+    renderTree();
+}
+
+export const newMessageTextUpdating = (newMessageText: string) => {
+    state.messagesPage.newMessageText = newMessageText
+    renderTree()
+}
+
+export const addMessage = () => {
+    const newMessage = {
+        id: 6,
+        message: state.messagesPage.newMessageText
+    }
+    state.messagesPage.messages.push(newMessage)
+    state.messagesPage.newMessageText = ""
+    renderTree()
 }
 
 export default state;

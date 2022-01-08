@@ -8,7 +8,7 @@ import {Routes, Route} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
-import state, {addPost} from "./redux/state";
+import state, {newMessageTextUpdating, addPost, newPostTextUpdating, addMessage} from "./redux/state";
 
 function App() {
 
@@ -18,8 +18,18 @@ function App() {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path="/profile" element={<Profile posts={state.profilePage.posts} addPost={addPost} />}/>
-                        <Route path="/dialogs" element={<Dialogs dialogsData={state.messagesPage} />}/>
+                        <Route path="/profile" element={<Profile
+                            posts={state.profilePage.posts}
+                            newPostText={state.profilePage.newPostText}
+                            addPost={addPost}
+                            newPostTextUpdating={newPostTextUpdating}/>}
+                        />
+                        <Route path="/dialogs" element={<Dialogs
+                            dialogsData={state.messagesPage}
+                            newMessageTextUpdating={newMessageTextUpdating}
+                            addMessage={addMessage}
+                        />}
+                        />
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>

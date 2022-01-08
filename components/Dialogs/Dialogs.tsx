@@ -6,6 +6,8 @@ import {MessagesPageType} from "../../redux/state";
 
 type DialogsPropsType = {
     dialogsData: MessagesPageType
+    newMessageTextUpdating: (newMessageText: string) => void
+    addMessage: () => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
@@ -16,7 +18,12 @@ export function Dialogs(props: DialogsPropsType) {
                <DialogItem dialogs={props.dialogsData.dialogs} />
             </div>
             <div className={s.messages}>
-                <Message messages={props.dialogsData.messages} />
+                <Message
+                    messages={props.dialogsData.messages}
+                    newMessageText={props.dialogsData.newMessageText}
+                    newMessageTextUpdating={props.newMessageTextUpdating}
+                    addMessage={props.addMessage}
+                />
             </div>
         </div>
     )

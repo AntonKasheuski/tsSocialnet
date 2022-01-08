@@ -1,26 +1,31 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './../Dialogs.module.css';
 import {MessageType} from "../../../redux/state";
 
 type MessagesPropsType = {
     messages: Array<MessageType>
+    newMessageText: string
+    newMessageTextUpdating: (newMessageText: string) => void
+    addMessage: () => void
 }
 
 export function Message(props: MessagesPropsType) {
 
-    let messagesElements = props.messages.map(m => <div>{m.message}</div>)
+    let messagesElements = props.messages.map(m => <div key={m.id}>{m.message}</div>)
 
-    let newMessageTextRef = React.createRef<HTMLTextAreaElement>()
+    const newTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.newMessageTextUpdating(e.currentTarget.value)
+    }
 
-    const addMessage = () => {
-        alert(newMessageTextRef.current?.value)
+    const addMessageHandler = () => {
+        props.addMessage()
     }
 
     return (
         <div>
             <div className={s.message}>{messagesElements}</div>
-            <textarea ref={newMessageTextRef}></textarea>
-            <button onClick={addMessage}>Add message</button>
+            <textarea value={props.newMessageText} onChange={newTextHandler}></textarea>
+            <button onClick={addMessageHandler}>Add message</button>
         </div>
     )
 }
