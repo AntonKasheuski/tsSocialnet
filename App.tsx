@@ -4,13 +4,22 @@ import {Dialogs} from './components/Dialogs/Dialogs';
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
-import {Routes, Route} from 'react-router-dom';
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
-import state, {newMessageTextUpdating, addPost, newPostTextUpdating, addMessage} from "./redux/state";
+import {Routes, Route} from 'react-router-dom';
+import {PostType, MessagesPageType} from "./redux/state";
 
-function App() {
+type PropsType = {
+    posts: Array<PostType>
+    newPostText: string
+    newPostTextUpdating: (newPostText: string) => void
+    addPost: () => void
+    dialogsData: MessagesPageType
+    newMessageTextUpdating: (newMessageText: string) => void
+    addMessage: () => void
+}
+function App(props: PropsType) {
 
     return (
             <div className='app-wrapper'>
@@ -19,15 +28,16 @@ function App() {
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path="/profile" element={<Profile
-                            posts={state.profilePage.posts}
-                            newPostText={state.profilePage.newPostText}
-                            addPost={addPost}
-                            newPostTextUpdating={newPostTextUpdating}/>}
+                            posts={props.posts}
+                            newPostText={props.newPostText}
+                            newPostTextUpdating={props.newPostTextUpdating}
+                            addPost={props.addPost}
+                            />}
                         />
                         <Route path="/dialogs" element={<Dialogs
-                            dialogsData={state.messagesPage}
-                            newMessageTextUpdating={newMessageTextUpdating}
-                            addMessage={addMessage}
+                            dialogsData={props.dialogsData}
+                            newMessageTextUpdating={props.newMessageTextUpdating}
+                            addMessage={props.addMessage}
                         />}
                         />
                         <Route path="/news" element={<News/>}/>

@@ -6,8 +6,8 @@ import {PostType} from '../../redux/state'
 type PropsType = {
     posts: Array<PostType>
     newPostText: string
-    addPost: () => void
     newPostTextUpdating: (newPostText: string) => void
+    addPost: () => void
 }
 
 export function Profile(props: PropsType) {
@@ -18,8 +18,8 @@ export function Profile(props: PropsType) {
             <MyPosts
                 posts={props.posts}
                 newPostText={props.newPostText}
-                addPost={props.addPost}
                 newPostTextUpdating={props.newPostTextUpdating}
+                addPost={props.addPost}
             />
         </div>
     )

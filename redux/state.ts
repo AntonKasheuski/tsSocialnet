@@ -1,4 +1,4 @@
-import {renderTree} from "../render";
+let rerender = () => {}
 
 export type DialogType = {
     id: number,
@@ -69,9 +69,8 @@ let state = {
 
 export const newPostTextUpdating = (newPostText: string) => {
     state.profilePage.newPostText = newPostText
-    renderTree();
+    rerender();
 }
-
 export const addPost = () => {
     const newPost: PostType = {
         id: 4,
@@ -80,14 +79,12 @@ export const addPost = () => {
     }
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ""
-    renderTree();
+    rerender();
 }
-
 export const newMessageTextUpdating = (newMessageText: string) => {
     state.messagesPage.newMessageText = newMessageText
-    renderTree()
+    rerender()
 }
-
 export const addMessage = () => {
     const newMessage = {
         id: 6,
@@ -95,7 +92,10 @@ export const addMessage = () => {
     }
     state.messagesPage.messages.push(newMessage)
     state.messagesPage.newMessageText = ""
-    renderTree()
+    rerender()
+}
+export const subscribe = (observer: () => void) => {
+    rerender = observer
 }
 
 export default state;
