@@ -33,10 +33,21 @@ export type StoreType = {
     _onChange: () => void
     getState: () => RootStateType
     subscribe: (observer: () => void) => void
-    newPostTextUpdating: (newPostText: string) => void
-    addPost: () => void
-    newMessageTextUpdating: (newMessageText: string) => void
-    addMessage: () => void
+    dispatch: (action: NewPostTextUpdatingPropsType | AddPostPropsType | NewPostMessageUpdatingPropsType | AddMessagePropsType) => void
+}
+export type NewPostTextUpdatingPropsType = {
+    type: "NEW-POST-TEXT-UPDATING"
+    newPostText: string
+}
+export type AddPostPropsType = {
+    type: "ADD-POST"
+}
+export type NewPostMessageUpdatingPropsType = {
+    type: "NEW-MESSAGE-TEXT-UPDATING"
+    newMessageText: string
+}
+export type AddMessagePropsType = {
+    type: "ADD-MESSAGE"
 }
 
 export const store: StoreType = {
@@ -86,31 +97,30 @@ export const store: StoreType = {
         this._onChange = callback
     },
 
-    newPostTextUpdating(newPostText: string) {
-        this._state.profilePage.newPostText = newPostText
-        this._onChange();
-    },
-    addPost() {
-        const newPost: PostType = {
-            id: 4,
-            post: this._state.profilePage.newPostText,
-            likesCount: 0
+    dispatch(action) {
+        if (action.type === "NEW-POST-TEXT-UPDATING") {
+            this._state.profilePage.newPostText = action.newPostText
+            this._onChange();
+        } else if (action.type === "ADD-POST") {
+            const newPost: PostType = {
+                id: 4,
+                post: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ""
+            this._onChange();
+        } else if (action.type === "NEW-MESSAGE-TEXT-UPDATING") {
+            this._state.messagesPage.newMessageText = action.newMessageText
+            this._onChange()
+        } else if (action.type === "ADD-MESSAGE") {
+            const newMessage = {
+                id: 6,
+                message: this._state.messagesPage.newMessageText
+            }
+            this._state.messagesPage.messages.push(newMessage)
+            this._state.messagesPage.newMessageText = ""
+            this._onChange()
         }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ""
-        this._onChange();
-    },
-    newMessageTextUpdating(newMessageText: string) {
-        this._state.messagesPage.newMessageText = newMessageText
-        this._onChange()
-    },
-    addMessage() {
-        const newMessage = {
-            id: 6,
-            message: this._state.messagesPage.newMessageText
-        }
-        this._state.messagesPage.messages.push(newMessage)
-        this._state.messagesPage.newMessageText = ""
-        this._onChange()
-    },
+    }
 }

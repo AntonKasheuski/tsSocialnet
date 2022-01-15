@@ -2,14 +2,13 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {DialogType, MessageType} from "../../redux/state";
+import {AddMessagePropsType, DialogType, MessageType, NewPostMessageUpdatingPropsType} from "../../redux/state";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageText: string
-    newMessageTextUpdating: (newMessageText: string) => void
-    addMessage: () => void
+    dispatch: (action: NewPostMessageUpdatingPropsType | AddMessagePropsType) => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
@@ -23,8 +22,7 @@ export function Dialogs(props: DialogsPropsType) {
                 <Message
                     messages={props.messages}
                     newMessageText={props.newMessageText}
-                    newMessageTextUpdating={props.newMessageTextUpdating}
-                    addMessage={props.addMessage}
+                    dispatch={props.dispatch}
                 />
             </div>
         </div>
