@@ -1,3 +1,8 @@
+const NEW_POST_TEXT_UPDATING = "NEW-POST-TEXT-UPDATING";
+const ADD_POST = "ADD-POST";
+const NEW_MESSAGE_TEXT_UPDATING = "NEW-MESSAGE-TEXT-UPDATING";
+const ADD_MESSAGE = "ADD-MESSAGE";
+
 export type DialogType = {
     id: number,
     name: string
@@ -33,22 +38,12 @@ export type StoreType = {
     _onChange: () => void
     getState: () => RootStateType
     subscribe: (observer: () => void) => void
-    dispatch: (action: NewPostTextUpdatingPropsType | AddPostPropsType | NewPostMessageUpdatingPropsType | AddMessagePropsType) => void
+    dispatch: (action: NewPostTextUpdatingPropsType | AddPostPropsType | NewMessageTextUpdatingPropsType | AddMessagePropsType) => void
 }
-export type NewPostTextUpdatingPropsType = {
-    type: "NEW-POST-TEXT-UPDATING"
-    newPostText: string
-}
-export type AddPostPropsType = {
-    type: "ADD-POST"
-}
-export type NewPostMessageUpdatingPropsType = {
-    type: "NEW-MESSAGE-TEXT-UPDATING"
-    newMessageText: string
-}
-export type AddMessagePropsType = {
-    type: "ADD-MESSAGE"
-}
+export type NewPostTextUpdatingPropsType = ReturnType<typeof newPostTextUpdatingActionCreator>
+export type AddPostPropsType = ReturnType<typeof addPostActionCreator>
+export type NewMessageTextUpdatingPropsType = ReturnType<typeof newMessageTextUpdatingActionCreator>
+export type AddMessagePropsType = ReturnType<typeof addMessageActionCreator>
 
 export const store: StoreType = {
     _state: {
@@ -98,10 +93,10 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "NEW-POST-TEXT-UPDATING") {
+        if (action.type === NEW_POST_TEXT_UPDATING) {
             this._state.profilePage.newPostText = action.newPostText
             this._onChange();
-        } else if (action.type === "ADD-POST") {
+        } else if (action.type === ADD_POST) {
             const newPost: PostType = {
                 id: 4,
                 post: this._state.profilePage.newPostText,
@@ -110,10 +105,10 @@ export const store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ""
             this._onChange();
-        } else if (action.type === "NEW-MESSAGE-TEXT-UPDATING") {
+        } else if (action.type === NEW_MESSAGE_TEXT_UPDATING) {
             this._state.messagesPage.newMessageText = action.newMessageText
             this._onChange()
-        } else if (action.type === "ADD-MESSAGE") {
+        } else if (action.type === ADD_MESSAGE) {
             const newMessage = {
                 id: 6,
                 message: this._state.messagesPage.newMessageText
@@ -123,4 +118,15 @@ export const store: StoreType = {
             this._onChange()
         }
     }
+}
+
+export const newPostTextUpdatingActionCreator = (newPostText: string) => {
+    return {type: NEW_POST_TEXT_UPDATING, newPostText: newPostText} as const
+}
+export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const newMessageTextUpdatingActionCreator = (newMessageText: string) => {
+    return {type: NEW_MESSAGE_TEXT_UPDATING, newMessageText: newMessageText} as const
+}
+export const addMessageActionCreator = () => {
+    return {type: ADD_MESSAGE} as const
 }
