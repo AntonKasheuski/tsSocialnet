@@ -33,7 +33,11 @@ export function MyPosts(props: PropsType) {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea value={props.newPostText} onChange={newTextHandler} />
+                    <textarea
+                        value={props.newPostText}
+                        onChange={newTextHandler}
+                        placeholder={"Enter your text"}
+                    />
                 </div>
                 <div>
                     <button onClick={addPostHandler}>Add post</button>

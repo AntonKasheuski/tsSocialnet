@@ -35,7 +35,7 @@ export type RootStateType = {
 }
 export type StoreType = {
     _state: RootStateType
-    _onChange: () => void
+    _callSubscriber: () => void
     getState: () => RootStateType
     subscribe: (observer: () => void) => void
     dispatch: (action: NewPostTextUpdatingPropsType | AddPostPropsType | NewMessageTextUpdatingPropsType | AddMessagePropsType) => void
@@ -81,21 +81,21 @@ export const store: StoreType = {
             ]
         }
     },
-    _onChange() {
+    _callSubscriber() {
         console.log('state changed')
     },
 
     getState() {
         return this._state
     },
-    subscribe(callback) {
-        this._onChange = callback
+    subscribe(observer) {
+        this._callSubscriber = observer
     },
 
     dispatch(action) {
         if (action.type === NEW_POST_TEXT_UPDATING) {
             this._state.profilePage.newPostText = action.newPostText
-            this._onChange();
+            this._callSubscriber();
         } else if (action.type === ADD_POST) {
             const newPost: PostType = {
                 id: 4,
@@ -104,10 +104,10 @@ export const store: StoreType = {
             }
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ""
-            this._onChange();
+            this._callSubscriber();
         } else if (action.type === NEW_MESSAGE_TEXT_UPDATING) {
             this._state.messagesPage.newMessageText = action.newMessageText
-            this._onChange()
+            this._callSubscriber()
         } else if (action.type === ADD_MESSAGE) {
             const newMessage = {
                 id: 6,
@@ -115,7 +115,7 @@ export const store: StoreType = {
             }
             this._state.messagesPage.messages.push(newMessage)
             this._state.messagesPage.newMessageText = ""
-            this._onChange()
+            this._callSubscriber()
         }
     }
 }

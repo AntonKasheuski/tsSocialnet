@@ -30,7 +30,11 @@ export function Message(props: MessagesPropsType) {
     return (
         <div>
             <div className={s.message}>{messagesElements}</div>
-            <textarea value={props.newMessageText} onChange={newTextHandler} />
+            <textarea
+                value={props.newMessageText}
+                onChange={newTextHandler}
+                placeholder={"Enter your text"}
+            />
             <button onClick={addMessageHandler}>Add message</button>
         </div>
     )

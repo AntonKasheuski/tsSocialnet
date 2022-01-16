@@ -2,6 +2,10 @@
     grid-area: n;
     background-color: deepskyblue;
     padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
 }
 
 .item {
@@ -20,7 +24,9 @@
     border-radius: 5px;
     width: 100px;
     height: 50px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 5px;
 
 }
