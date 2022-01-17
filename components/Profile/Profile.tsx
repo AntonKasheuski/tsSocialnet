@@ -1,7 +1,8 @@
 import React from 'react';
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
-import {AddPostPropsType, NewPostTextUpdatingPropsType, PostType} from '../../redux/state'
+import {PostType} from '../../redux/state'
+import {AddPostPropsType, NewPostTextUpdatingPropsType} from '../../redux/profile-reducer'
 
 type PropsType = {
     posts: Array<PostType>
