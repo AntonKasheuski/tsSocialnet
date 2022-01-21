@@ -1,12 +1,44 @@
-import {ActionType, MessagesPageType} from "./state";
-
 const NEW_MESSAGE_TEXT_UPDATING = "NEW-MESSAGE-TEXT-UPDATING";
 const ADD_MESSAGE = "ADD-MESSAGE";
+
+export type DialogType = {
+    id: number,
+    name: string
+}
+export type MessageType = {
+    id: number,
+    message: string
+}
+export type MessagesPageType = {
+    dialogs: Array<DialogType>,
+    newMessageText: string,
+    messages: Array<MessageType>
+}
+export type DialogsActionType = NewMessageTextUpdatingPropsType | AddMessagePropsType
 
 export type NewMessageTextUpdatingPropsType = ReturnType<typeof newMessageTextUpdatingActionCreator>
 export type AddMessagePropsType = ReturnType<typeof addMessageActionCreator>
 
-const dialogsReducer = (state: MessagesPageType, action: ActionType) => {
+const initialState = {
+    dialogs: [
+        {id: 1, name: 'Daria'},
+        {id: 2, name: 'Vasya'},
+        {id: 3, name: 'Petya'},
+        {id: 4, name: 'Sasha'},
+        {id: 5, name: 'Viktor'},
+        {id: 6, name: 'Antonio'},
+    ],
+    newMessageText: "",
+    messages: [
+        {id: 1, message: 'Hi!'},
+        {id: 2, message: 'Hey!'},
+        {id: 3, message: 'Yo!'},
+        {id: 4, message: 'Yo!'},
+        {id: 5, message: 'Yo!'},
+    ]
+}
+
+const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionType) => {
     switch (action.type) {
         case NEW_MESSAGE_TEXT_UPDATING:
             state.newMessageText = action.newMessageText

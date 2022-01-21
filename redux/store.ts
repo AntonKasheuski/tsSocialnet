@@ -1,5 +1,5 @@
-import profileReducer, {AddPostPropsType, NewPostTextUpdatingPropsType} from "./profile-reducer";
-import dialogsReducer, {AddMessagePropsType, NewMessageTextUpdatingPropsType} from "./dialogs-reducer";
+import profileReducer, {ProfileActionType} from "./profile-reducer";
+import dialogsReducer, {DialogsActionType} from "./dialogs-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
 export type DialogType = {
@@ -32,7 +32,7 @@ export type RootStateType = {
     messagesPage: MessagesPageType,
     profilePage: ProfilePageType
 }
-export type ActionType = NewPostTextUpdatingPropsType | AddPostPropsType | NewMessageTextUpdatingPropsType | AddMessagePropsType
+export type ActionType = ProfileActionType | DialogsActionType
 export type StoreType = {
     _state: RootStateType
     _callSubscriber: () => void
@@ -89,9 +89,9 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        /*this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
-        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)*/
 
         this._callSubscriber()
     }

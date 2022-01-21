@@ -8,15 +8,11 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {Routes, Route, Navigate} from 'react-router-dom';
-import {StoreType} from "./redux/state";
+import store from "./redux/redux-store"
 
-type PropsType = {
-    store: StoreType
-}
+function App() {
 
-function App(props: PropsType) {
-
-    const state = props.store.getState();
+    const state = store.getState();
 
     return (
             <div className='app-wrapper'>
@@ -28,14 +24,14 @@ function App(props: PropsType) {
                         <Route path="/profile" element={<Profile
                             posts={state.profilePage.posts}
                             newPostText={state.profilePage.newPostText}
-                            dispatch={props.store.dispatch.bind(props.store)}
+                            dispatch={store.dispatch.bind(store)}
                             />}
                         />
                         <Route path="/dialogs" element={<Dialogs
-                            dialogs={state.messagesPage.dialogs}
-                            messages={state.messagesPage.messages}
-                            newMessageText={state.messagesPage.newMessageText}
-                            dispatch={props.store.dispatch.bind(props.store)}
+                            dialogs={state.dialogsPage.dialogs}
+                            messages={state.dialogsPage.messages}
+                            newMessageText={state.dialogsPage.newMessageText}
+                            dispatch={store.dispatch.bind(store)}
                         />}
                         />
                         <Route path="/news" element={<News/>}/>
