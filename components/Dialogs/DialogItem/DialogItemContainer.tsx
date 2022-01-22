@@ -7,7 +7,7 @@ export function DialogItemContainer() {
     return (
         <StoreContext.Consumer>
             {store =>
-                <DialogItem dialogs={store.getState().dialogsPage.dialogs} />
+                <DialogItem dialogs={store.getState().messagesPage.dialogs} />
             }
         </StoreContext.Consumer>
     )

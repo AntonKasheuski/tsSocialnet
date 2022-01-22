@@ -18,7 +18,7 @@ export type PostType = {
 export type SidebarType = {
     friends: Array<DialogType>
 }
-export type MessagesPageType = {
+export type DialogsPageType = {
     dialogs: Array<DialogType>,
     newMessageText: string,
     messages: Array<MessageType>
@@ -29,7 +29,7 @@ export type ProfilePageType = {
 }
 export type RootStateType = {
     sidebar: SidebarType,
-    messagesPage: MessagesPageType,
+    messagesPage: DialogsPageType,
     profilePage: ProfilePageType
 }
 export type ActionType = ProfileActionType | DialogsActionType

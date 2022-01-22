@@ -20,8 +20,8 @@ export function MessageContainer() {
                 }
 
                 return <Message
-                    messages={store.getState().dialogsPage.messages}
-                    newMessageText={store.getState().dialogsPage.newMessageText}
+                    messages={store.getState().messagesPage.messages}
+                    newMessageText={store.getState().messagesPage.newMessageText}
                     newMessageTextUpdating={newMessageTextUpdating}
                     addMessage={addMessage}
                 />
