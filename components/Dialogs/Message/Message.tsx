@@ -1,30 +1,23 @@
 import React, {ChangeEvent} from 'react';
 import s from './../Dialogs.module.css';
-import {MessageType} from "../../../redux/store";
-import {
-    addMessageActionCreator,
-    AddMessagePropsType,
-    newMessageTextUpdatingActionCreator,
-    NewMessageTextUpdatingPropsType,
-} from "../../../redux/dialogs-reducer";
+import {MessageType} from "../../../redux/dialogs-reducer";
 
-type MessagesPropsType = {
+type PropsType = {
     messages: Array<MessageType>
     newMessageText: string
-    dispatch: (action: NewMessageTextUpdatingPropsType | AddMessagePropsType) => void
+    newMessageTextUpdating: (newMessageText: string) => void
+    addMessage: () => void
 }
 
-export function Message(props: MessagesPropsType) {
+export function Message(props: PropsType) {
     let messagesElements = props.messages.map(m => <div key={m.id}>{m.message}</div>)
 
     const newTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        // props.newMessageTextUpdating(e.currentTarget.value)
-        props.dispatch(newMessageTextUpdatingActionCreator(e.currentTarget.value))
+        props.newMessageTextUpdating(e.currentTarget.value)
     }
 
     const addMessageHandler = () => {
-        // props.addMessage()
-        props.dispatch(addMessageActionCreator())
+        props.addMessage()
     }
 
     return (

@@ -1,30 +1,17 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import {Message} from "./Message/Message";
-import {DialogItem} from "./DialogItem/DialogItem";
-import {DialogType, MessageType} from "../../redux/store";
-import {AddMessagePropsType, NewMessageTextUpdatingPropsType} from "../../redux/dialogs-reducer";
+import {MessageContainer} from "./Message/MessageContainer";
+import {DialogItemContainer} from "./DialogItem/DialogItemContainer";
 
-type DialogsPropsType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    newMessageText: string
-    dispatch: (action: NewMessageTextUpdatingPropsType | AddMessagePropsType) => void
-}
-
-export function Dialogs(props: DialogsPropsType) {
+export function Dialogs() {
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-               <DialogItem dialogs={props.dialogs} />
+               <DialogItemContainer />
             </div>
             <div className={s.messages}>
-                <Message
-                    messages={props.messages}
-                    newMessageText={props.newMessageText}
-                    dispatch={props.dispatch}
-                />
+                <MessageContainer />
             </div>
         </div>
     )
