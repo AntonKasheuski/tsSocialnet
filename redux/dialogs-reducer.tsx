@@ -14,12 +14,12 @@ export type MessagesPageType = {
     newMessageText: string,
     messages: Array<MessageType>
 }
-export type DialogsActionType = NewMessageTextUpdatingPropsType | AddMessagePropsType
 
 export type NewMessageTextUpdatingPropsType = ReturnType<typeof newMessageTextUpdatingActionCreator>
 export type AddMessagePropsType = ReturnType<typeof addMessageActionCreator>
+export type DialogsActionType = NewMessageTextUpdatingPropsType | AddMessagePropsType
 
-const initialState = {
+const initialState: MessagesPageType = {
     dialogs: [
         {id: 1, name: 'Daria'},
         {id: 2, name: 'Vasya'},
@@ -38,7 +38,7 @@ const initialState = {
     ]
 }
 
-const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionType) => {
+export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionType): MessagesPageType => {
     switch (action.type) {
         case NEW_MESSAGE_TEXT_UPDATING:
             state.newMessageText = action.newMessageText
@@ -62,5 +62,3 @@ export const newMessageTextUpdatingActionCreator = (newMessageText: string) => {
 export const addMessageActionCreator = () => {
     return {type: ADD_MESSAGE} as const
 }
-
-export default dialogsReducer;

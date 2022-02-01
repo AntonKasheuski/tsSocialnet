@@ -1,39 +1,39 @@
-import profileReducer, {ProfileActionType} from "./profile-reducer";
-import dialogsReducer, {DialogsActionType} from "./dialogs-reducer";
-import sidebarReducer from "./sidebar-reducer";
+import {profileReducer, ProfileActionType} from "./profile-reducer";
+import {dialogsReducer, DialogsActionType} from "./dialogs-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
 
-export type DialogType = {
+type DialogType = {
     id: number,
     name: string
 }
-export type MessageType = {
+type MessageType = {
     id: number,
     message: string
 }
-export type PostType = {
+type PostType = {
     id: number,
     post: string,
     likesCount: number
 }
-export type SidebarType = {
+type SidebarType = {
     friends: Array<DialogType>
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogType>,
     newMessageText: string,
     messages: Array<MessageType>
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     newPostText: string,
     posts: Array<PostType>
 }
-export type RootStateType = {
+type RootStateType = {
     sidebar: SidebarType,
     messagesPage: DialogsPageType,
     profilePage: ProfilePageType
 }
-export type ActionType = ProfileActionType | DialogsActionType
-export type StoreType = {
+type ActionType = ProfileActionType | DialogsActionType
+type StoreType = {
     _state: RootStateType
     _callSubscriber: () => void
     getState: () => RootStateType
@@ -41,7 +41,7 @@ export type StoreType = {
     dispatch: (action: ActionType) => void
 }
 
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         sidebar: {
             friends: [

@@ -2,15 +2,9 @@ import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {PostType} from '../../../redux/profile-reducer'
+import {MyPostsPropsType} from "./MyPostsContainer";
 
-type PropsType = {
-    posts: Array<PostType>
-    newPostText: string
-    newPostTextUpdating: (newPostText: string) => void
-    addPost: () => void
-}
-
-export function MyPosts(props: PropsType) {
+export function MyPosts(props: MyPostsPropsType) {
     let postsElements = props.posts.map( (post: PostType) => <Post key={post.id} post={post.post} likesCount={post.likesCount}/>);
 
     const newTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {

@@ -1,13 +1,9 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './../Dialogs.module.css';
-import {DialogType} from "../../../redux/store";
+import {DialogItemPropsType} from "./DialogItemContainer";
 
-type DialogsPropsType = {
-    dialogs: Array<DialogType>
-}
-
-export function DialogItem(props: DialogsPropsType) {
+export function DialogItem(props: DialogItemPropsType) {
 
     let dialogsElements = props.dialogs.map(d => (
         <div>

@@ -1,32 +1,39 @@
 import React from 'react';
 import {
-    addMessageActionCreator,
+    addMessageActionCreator, MessageType,
     newMessageTextUpdatingActionCreator,
 } from "../../../redux/dialogs-reducer";
 import {Message} from "./Message";
-import StoreContext from "../../../StoreContext"
+import {connect} from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
+import {Dispatch} from "redux";
 
-export function MessageContainer() {
-
-    return (
-        <StoreContext.Consumer>
-            {store => {
-                const newMessageTextUpdating = (text: string) => {
-                    store.dispatch(newMessageTextUpdatingActionCreator(text))
-                }
-
-                const addMessage = () => {
-                    store.dispatch(addMessageActionCreator())
-                }
-
-                return <Message
-                    messages={store.getState().messagesPage.messages}
-                    newMessageText={store.getState().messagesPage.newMessageText}
-                    newMessageTextUpdating={newMessageTextUpdating}
-                    addMessage={addMessage}
-                />
-            }}
-        </StoreContext.Consumer>
-    )
+type MapStatePropsType = {
+    messages: Array<MessageType>
+    newMessageText: string
 }
+type MapDispatchPropsType = {
+    newMessageTextUpdating: (newMessageText: string) => void
+    addMessage: () => void
+}
+export type MessagePropsType = MapStatePropsType & MapDispatchPropsType
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        messages: state.messagesPage.messages,
+        newMessageText: state.messagesPage.newMessageText
+    }
+}
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        newMessageTextUpdating: (text: string) => {
+            dispatch(newMessageTextUpdatingActionCreator(text))
+        },
+        addMessage: () => {
+            dispatch(addMessageActionCreator())
+        }
+    }
+}
+
+export const MessageContainer = connect(mapStateToProps, mapDispatchToProps)(Message)
 

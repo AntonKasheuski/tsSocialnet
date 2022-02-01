@@ -1,31 +1,38 @@
 import React from 'react';
 import {
     addPostActionCreator,
-    newPostTextUpdatingActionCreator,
+    newPostTextUpdatingActionCreator, PostType, ProfileActionType,
 } from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
-import StoreContext from "../../../StoreContext"
+import {connect} from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
+import {Dispatch} from "redux";
 
-export function MyPostsContainer() {
-
-    return (
-        <StoreContext.Consumer>
-            {store => {
-                const newPostTextUpdating = (text: string) => {
-                    store.dispatch(newPostTextUpdatingActionCreator(text))
-                }
-
-                const addPost = () => {
-                    store.dispatch(addPostActionCreator())
-                }
-
-                return <MyPosts
-                    posts={store.getState().profilePage.posts}
-                    newPostText={store.getState().profilePage.newPostText}
-                    newPostTextUpdating={newPostTextUpdating}
-                    addPost={addPost}
-                />
-            }}
-        </StoreContext.Consumer>
-    )
+type MapStatePropsType = {
+    posts: Array<PostType>
+    newPostText: string
 }
+type MapDispatchPropsType = {
+    newPostTextUpdating: (text: string) => void
+    addPost: () => void
+}
+export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
+}
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        newPostTextUpdating: (text: string) => {
+            dispatch(newPostTextUpdatingActionCreator(text))
+        },
+        addPost: () => {
+            dispatch(addPostActionCreator())
+        }
+    }
+}
+
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps) (MyPosts)

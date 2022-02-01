@@ -1,15 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import s from './../Dialogs.module.css';
-import {MessageType} from "../../../redux/dialogs-reducer";
+import {MessagePropsType} from "./MessageContainer";
 
-type PropsType = {
-    messages: Array<MessageType>
-    newMessageText: string
-    newMessageTextUpdating: (newMessageText: string) => void
-    addMessage: () => void
-}
-
-export function Message(props: PropsType) {
+export function Message(props: MessagePropsType) {
     let messagesElements = props.messages.map(m => <div key={m.id}>{m.message}</div>)
 
     const newTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
