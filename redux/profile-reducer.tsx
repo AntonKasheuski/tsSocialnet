@@ -27,17 +27,17 @@ const initialState = {
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
     switch (action.type) {
         case NEW_POST_TEXT_UPDATING:
-            state.newPostText = action.newPostText
-            return state;
+            return {...state, newPostText: action.newPostText}
         case ADD_POST:
             const newPost: PostType = {
                 id: 4,
                 post: state.newPostText,
                 likesCount: 0
             }
-            state.posts.push(newPost)
-            state.newPostText = ""
-            return state;
+            return {...state,
+                posts: [...state.posts, newPost],
+                newPostText: ""
+            }
         default:
             return state;
     }

@@ -6,7 +6,7 @@ import {DialogItemPropsType} from "./DialogItemContainer";
 export function DialogItem(props: DialogItemPropsType) {
 
     let dialogsElements = props.dialogs.map(d => (
-        <div>
+        <div key={d.id}>
             <img
                 src='https://is3-ssl.mzstatic.com/image/thumb/Purple49/v4/c6/33/dd/c633dd45-95be-f814-bec6-9e84ee35d482/source/512x512bb.jpg'/>
             <NavLink to={'/dialogs/' + d.id}>{d.name}</NavLink>
