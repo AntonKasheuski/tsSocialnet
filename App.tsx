@@ -8,6 +8,7 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {Routes, Route, Navigate} from 'react-router-dom';
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/" element={<Navigate replace to="/profile"/>}/>
                     <Route path="/profile" element={<Profile/>}/>
                     <Route path="/dialogs" element={<Dialogs/>}/>
+                    <Route path="/users" element={<UsersContainer/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
