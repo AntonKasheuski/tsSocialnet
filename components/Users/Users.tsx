@@ -1,68 +1,45 @@
 import React from 'react';
 import {UsersPagePropsType} from "./UsersContainer";
 import s from "./Users.module.css"
+import axios from "axios";
+import defaultUserPhoto from "../../assets/images/default-user.png"
 
-export const Users = (props: UsersPagePropsType) => {
 
-    if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                fullName: "Dmitry K.",
-                userPhoto: "https://www.matthewdevaney.com/wp-content/uploads/2021/08/powerapps-userphoto-featured-1.jpg",
-                status: "I'm looking for a job right now...",
-                location: {country: "Belarus", city: "Minsk"},
-                followed: true
-            },
-            {
-                id: 2,
-                fullName: "Svetlana D.",
-                userPhoto: "https://www.matthewdevaney.com/wp-content/uploads/2021/08/powerapps-userphoto-featured-1.jpg",
-                status: "I'm so pretty",
-                location: {country: "Belarus", city: "Minsk"},
-                followed: true
-            },
-            {
-                id: 3,
-                fullName: "Sergei S.",
-                userPhoto: "https://www.matthewdevaney.com/wp-content/uploads/2021/08/powerapps-userphoto-featured-1.jpg",
-                status: "I like football!!!",
-                location: {country: "Ukraine", city: "Kiev"},
-                followed: false
-            },
-            {
-                id: 4,
-                fullName: "Andrew T.",
-                userPhoto: "https://www.matthewdevaney.com/wp-content/uploads/2021/08/powerapps-userphoto-featured-1.jpg",
-                status: "I'm free ti help you!",
-                location: {country: "United States", city: "Philadelphia"},
-                followed: false
-            },
-        ])
+export class Users extends React.Component<UsersPagePropsType> {
+    constructor(props: UsersPagePropsType) {
+        super(props);
+        alert('New')
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            this.props.setUsers(response.data.items)
+        });
     }
 
-    return (
-        <div>
-            {props.users.map(u =>
+    render() {
+        return <div>
+            {this.props.users.map(u =>
                 <div key={u.id} className={s.userItem}>
                     <div className={s.avatarAndButton}>
-                        <img src={u.userPhoto} className={s.userPhoto}/>
+                        <img src={u.photos.small ? u.photos.small : defaultUserPhoto} className={s.userPhoto}/>
                         {u.followed
-                            ? <button onClick={ () => {props.unfollowUser(u.id)} }>Unfollow</button>
-                            : <button onClick={ () => {props.followUser(u.id)} }>Follow</button>}
+                            ? <button onClick={() => {
+                                this.props.unfollowUser(u.id)
+                            }}>Unfollow</button>
+                            : <button onClick={() => {
+                                this.props.followUser(u.id)
+                            }}>Follow</button>}
                     </div>
                     <div className={s.userBlock}>
                         <div className={s.userNameAndStatus}>
-                            <div>{u.fullName}</div>
-                            <div>{u.status}</div>
+                            <div>{u.name}</div>
+                            <div style={{opacity: 0.5}}>{"u.status"}</div>
                         </div>
                         <div className={s.userLocation}>
-                            <div>{u.location.country}</div>
-                            <div>{u.location.city}</div>
+                            <div>{"u.location.country"}</div>
+                            <div>{"u.location.city"}</div>
                         </div>
                     </div>
                 </div>
             )}
         </div>
-    );
+    }
 }

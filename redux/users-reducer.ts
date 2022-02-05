@@ -6,10 +6,14 @@ export type LocationType = {
     country: string
     city: string
 }
+type UserPhotosType = {
+    small: string
+    large: string
+}
 export type UserType = {
     id: number
-    fullName: string
-    userPhoto: string
+    name: string
+    photos: UserPhotosType
     status: string
     location: LocationType
     followed: boolean
