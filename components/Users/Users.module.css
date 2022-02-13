@@ -40,3 +40,8 @@
     align-items: end;
     padding: 15px;
 }
+
+.selectedPage {
+    font-weight: bold;
+    padding: 0 3px 0 3px;
+}
