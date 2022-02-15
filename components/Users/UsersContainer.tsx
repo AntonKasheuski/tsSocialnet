@@ -73,10 +73,10 @@ const mapStateToProps = (state: AppStateType): UsersPageType => {
 }
 
 export default connect(mapStateToProps, {
-    followUser: followUser,
-    unfollowUser: unfollowUser,
-    setUsers: setUsers,
-    setCurrentPage: setCurrentPage,
-    setTotalUsersCount: setTotalUsersCount,
-    toggleFetching: toggleFetching,
+    followUser,
+    unfollowUser,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleFetching,
 })(UsersContainer)

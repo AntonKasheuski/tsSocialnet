@@ -1,19 +1,45 @@
 const NEW_POST_TEXT_UPDATING = "NEW-POST-TEXT-UPDATING";
 const ADD_POST = "ADD-POST";
+const SET_USER_PROFILE = "SET-USER-PROFILE";
 
 export type PostType = {
-    id: number,
-    post: string,
+    id: number
+    post: string
     likesCount: number
 }
-export type ProfilePageType = {
-    newPostText: string,
-    posts: Array<PostType>
+type ContactsType = {
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
 }
-export type ProfileActionType = NewPostTextUpdatingPropsType | AddPostPropsType
+type ProfilePhotosType = {
+    small: string
+    large: string
+}
+export type ProfileType = {
+    aboutMe: string
+    contacts: ContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: ProfilePhotosType
+}
+export type ProfilePageType = {
+    newPostText: string
+    posts: Array<PostType>
+    profile: ProfileType
+}
 
-export type NewPostTextUpdatingPropsType = ReturnType<typeof newPostTextUpdatingActionCreator>
-export type AddPostPropsType = ReturnType<typeof addPostActionCreator>
+export type NewPostTextUpdatingType = ReturnType<typeof newPostTextUpdating>
+export type AddPostPropsType = ReturnType<typeof addPost>
+export type SetUserProfileType = ReturnType<typeof setUserProfile>
+export type ProfileActionType = NewPostTextUpdatingType | AddPostPropsType | SetUserProfileType
 
 const initialState = {
     newPostText: "",
@@ -21,7 +47,28 @@ const initialState = {
         {id: 1, post: "Hi, how are you?", likesCount: 15},
         {id: 2, post: "It's my first post", likesCount: 20},
         {id: 3, post: "Bla-bla", likesCount: 30}
-    ]
+    ],
+    profile: {
+        aboutMe: "",
+        contacts: {
+            facebook: "",
+            website: "",
+            vk: "",
+            twitter: "",
+            instagram: "",
+            youtube: "",
+            github: "",
+            mainLink: "",
+        },
+        lookingForAJob: true,
+        lookingForAJobDescription: "",
+        fullName: "",
+        userId: NaN,
+        photos: {
+            small: "",
+            large:  "",
+        },
+    }
 }
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
@@ -38,12 +85,19 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
                 posts: [...state.posts, newPost],
                 newPostText: ""
             }
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile}
         default:
             return state;
     }
 }
 
-export const newPostTextUpdatingActionCreator = (newPostText: string) => {
+export const newPostTextUpdating = (newPostText: string) => {
     return {type: NEW_POST_TEXT_UPDATING, newPostText: newPostText} as const
 }
-export const addPostActionCreator = () => ({type: ADD_POST} as const)
+export const addPost = () => {
+    return {type: ADD_POST} as const
+}
+export const setUserProfile = (profile: ProfileType) => {
+    return {type: SET_USER_PROFILE, profile} as const
+}
