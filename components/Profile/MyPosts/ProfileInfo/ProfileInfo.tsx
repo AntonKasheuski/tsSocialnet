@@ -1,15 +1,21 @@
 import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {ProfileType} from "../../../../redux/profile-reducer";
+import {Preloader} from "../../../common/Preloader/Preloader";
+import defaultUserPhoto from "../../../../assets/images/default-user.png";
 
 export function ProfileInfo(props: { profile: ProfileType }) {
+    if (!props.profile) {
+        return <Preloader />
+    }
+
     return (
         <div>
             <div>
                 <img src={'https://www.nycgovparks.org/facilities/images/beaches/coney-island-beach-content.jpg'}/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large} className={s.userPhoto}/>
+                <img src={props.profile.photos.large ? props.profile.photos.large : defaultUserPhoto} className={s.userPhoto}/>
                 <div className={s.userInfo}>
                     <div className={s.fullName}>{props.profile.fullName}</div>
                     <div className={s.aboutMe}>{props.profile.aboutMe}</div>
