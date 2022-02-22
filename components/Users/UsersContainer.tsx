@@ -28,10 +28,48 @@ class UsersContainer extends React.Component<UsersPagePropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.toggleFetching(true)
         this.props.setCurrentPage(pageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+        })
             .then(response => {
                 this.props.toggleFetching(false)
                 this.props.setUsers(response.data.items)
+            });
+    }
+
+    followUser = (userId: number) => {
+        this.props.toggleFetching(true)
+        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {}, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "61333b73-228a-45e4-880d-e33b8d4ecb29"
+            }
+        })
+            .then(response => {
+                this.props.toggleFetching(false)
+                if (response.data.resultCode === 0) {
+                    this.props.followUser(userId)
+                } else {
+                    alert(response.data.messages[0])
+                }
+            });
+    }
+
+    unfollowUser = (userId: number) => {
+        this.props.toggleFetching(true)
+        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "61333b73-228a-45e4-880d-e33b8d4ecb29"
+            }
+        })
+            .then(response => {
+                this.props.toggleFetching(false)
+                if (response.data.resultCode === 0) {
+                    this.props.unfollowUser(userId)
+                } else {
+                    alert(response.data.messages[0])
+                }
             });
     }
 
@@ -43,8 +81,8 @@ class UsersContainer extends React.Component<UsersPagePropsType> {
                          pageSize={this.props.pageSize}
                          currentPage={this.props.currentPage}
                          users={this.props.users}
-                         followUser={this.props.followUser}
-                         unfollowUser={this.props.unfollowUser}
+                         followUser={this.followUser}
+                         unfollowUser={this.unfollowUser}
                          onPageChanged={this.onPageChanged}
                 />
             }
