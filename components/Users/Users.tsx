@@ -9,6 +9,7 @@ type PropsType = {
     pageSize: number
     currentPage: number
     users: UserType[]
+    followingInProgressArray: number[]
     followUser: (userID: number) => void
     unfollowUser: (userID: number) => void
     onPageChanged: (p: number) => void
@@ -26,8 +27,8 @@ export const Users = (props: PropsType) => {
         <div>
             {pages.map(p => {
                 return <span key={p}
-                    className={props.currentPage === p ? s.selectedPage : ''}
-                    onClick={() => props.onPageChanged(p)}
+                             className={props.currentPage === p ? s.selectedPage : ''}
+                             onClick={() => props.onPageChanged(p)}
                 >{p}|</span>
             })}
         </div>
@@ -38,12 +39,14 @@ export const Users = (props: PropsType) => {
                         <img src={u.photos.small ? u.photos.small : defaultUserPhoto} className={s.userPhoto}/>
                     </NavLink>
                     {u.followed
-                        ? <button onClick={() => {
-                            props.unfollowUser(u.id)
-                        }}>Unfollow</button>
-                        : <button onClick={() => {
-                            props.followUser(u.id)
-                        }}>Follow</button>}
+                        ? <button disabled={props.followingInProgressArray.some(id => id === u.id)}
+                                  onClick={() => {
+                                      props.unfollowUser(u.id)
+                                  }}>Unfollow</button>
+                        : <button disabled={props.followingInProgressArray.some(id => id === u.id)}
+                                  onClick={() => {
+                                      props.followUser(u.id)
+                                  }}>Follow</button>}
                 </div>
                 <div className={s.userBlock}>
                     <div className={s.userNameAndStatus}>
