@@ -1,3 +1,6 @@
+import {authAPI} from "../api/api";
+import {AppThunk} from "./redux-store";
+
 const SET_USER_DATA = "SET-USER-DATA"
 const TOGGLE_FETCHING = "TOGGLE-FETCHING"
 
@@ -37,4 +40,19 @@ export const setAuthUserData = (userId: number, email: string, login: string) =>
 }
 export const toggleFetching = (isFetching: boolean) => {
     return {type: TOGGLE_FETCHING, isFetching} as const
+}
+
+export const authorizationCheck = (): AppThunk => (dispatch) => {
+    dispatch(toggleFetching(true))
+    authAPI.authorizationCheck()
+        .then(response => {
+            dispatch(toggleFetching(false))
+            if (response.resultCode === 0) {
+                dispatch(setAuthUserData(
+                    response.data.id,
+                    response.data.email,
+                    response.data.login
+                ))
+            }
+        });
 }

@@ -2,17 +2,13 @@ import React from 'react';
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {ProfileType, setUserProfile} from "../../redux/profile-reducer";
+import {ProfileType, setCurrentUser} from "../../redux/profile-reducer";
 import {useMatch} from "react-router-dom";
-import {profileAPI} from "../../api/api";
 
 class ProfileContainer extends React.Component<WithUrlDataContainerComponentPropsType> {
     componentDidMount() {
         let userId = this.props.match ? this.props.match.params.userId : '22187';
-        profileAPI.getCurrentUser(userId)
-            .then(response => {
-                this.props.setUserProfile(response)
-            });
+        this.props.setCurrentUser(userId)
     }
 
     render() {
@@ -28,7 +24,7 @@ type MapStateToPropsType = {
     profile: ProfileType
 }
 type MapDispatchPropsType = {
-    setUserProfile: (profile: ProfileType) => void
+    setCurrentUser: (userId: number) => void
 }
 
 export type ProfilePagePropsType = MapStateToPropsType & MapDispatchPropsType
@@ -47,4 +43,6 @@ const WithUrlDataContainerComponent = (props: ProfilePagePropsType): JSX.Element
     return <ProfileContainer {...props} match={match}/>;
 }
 
-export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent)
+export default connect(mapStateToProps, {
+    setCurrentUser
+})(WithUrlDataContainerComponent)

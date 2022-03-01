@@ -1,3 +1,6 @@
+import {usersAPI} from "../api/api";
+import {AppThunk} from "./redux-store";
+
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET-USERS"
@@ -32,8 +35,8 @@ export type UsersPageType = {
     followingInProgressArray: (number)[]
 }
 
-type FollowUserActionType = ReturnType<typeof followUser>
-type UnfollowUserActionType = ReturnType<typeof unfollowUser>
+type FollowUserActionType = ReturnType<typeof followUserAccept>
+type UnfollowUserActionType = ReturnType<typeof unfollowUserAccept>
 type SetUsersActionType = ReturnType<typeof setUsers>
 type SetCurrentPageType = ReturnType<typeof setCurrentPage>
 type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCount>
@@ -82,10 +85,10 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
     }
 }
 
-export const followUser = (userID: number) => {
+export const followUserAccept = (userID: number) => {
     return {type: FOLLOW, userID} as const
 }
-export const unfollowUser = (userID: number) => {
+export const unfollowUserAccept = (userID: number) => {
     return {type: UNFOLLOW, userID} as const
 }
 export const setUsers = (users: UsersType) => {
@@ -102,4 +105,47 @@ export const toggleFetching = (isFetching: boolean) => {
 }
 export const toggleFollowingProgress = (followingProgress: boolean, userId: number) => {
     return {type: TOGGLE_FOLLOWING_IN_PROGRESS, followingProgress, userId} as const
+}
+
+export const getStartPageUsers = (currentPage: number, pageSize: number): AppThunk => (dispatch) => {
+    dispatch(toggleFetching(true))
+    usersAPI.getUsers(currentPage, pageSize)
+        .then(response => {
+            dispatch(toggleFetching(false))
+            dispatch(setUsers(response.items))
+            dispatch(setTotalUsersCount(response.totalCount))
+        })
+}
+export const getSelectedPageUsers = (pageNumber: number, pageSize: number): AppThunk => (dispatch) => {
+    dispatch(toggleFetching(true))
+    dispatch(setCurrentPage(pageNumber))
+    usersAPI.getUsers(pageNumber, pageSize)
+        .then(response => {
+            dispatch(toggleFetching(false))
+            dispatch(setUsers(response.items))
+        })
+}
+export const followUser = (userId: number): AppThunk => (dispatch) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    usersAPI.followUser(userId)
+        .then(response => {
+            dispatch(toggleFollowingProgress(false, userId))
+            if (response.resultCode === 0) {
+                dispatch(followUserAccept(userId))
+            } else {
+                alert(response.messages[0])
+            }
+        })
+}
+export const unfollowUser = (userId: number): AppThunk => (dispatch) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    usersAPI.unfollowUser(userId)
+        .then(response => {
+            dispatch(toggleFollowingProgress(false, userId))
+            if (response.resultCode === 0) {
+                dispatch(unfollowUserAccept(userId))
+            } else {
+                alert(response.messages[0])
+            }
+        })
 }
