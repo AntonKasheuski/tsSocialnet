@@ -3,7 +3,7 @@ import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {ProfileType, setCurrentUser} from "../../redux/profile-reducer";
-import {useMatch} from "react-router-dom";
+import {Navigate, useMatch} from "react-router-dom";
 
 class ProfileContainer extends React.Component<WithUrlDataContainerComponentPropsType> {
     componentDidMount() {
@@ -12,6 +12,8 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
     }
 
     render() {
+        if (!this.props.isAuth) return <Navigate replace to="/login"/>
+
         return (
             <div>
                 <Profile {...this.props} profile={this.props.profile}/>
@@ -22,6 +24,7 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
 
 type MapStateToPropsType = {
     profile: ProfileType
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     setCurrentUser: (userId: number) => void
@@ -36,6 +39,7 @@ type WithUrlDataContainerComponentPropsType = ProfilePagePropsType & MatchPropsT
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 const WithUrlDataContainerComponent = (props: ProfilePagePropsType): JSX.Element => {
