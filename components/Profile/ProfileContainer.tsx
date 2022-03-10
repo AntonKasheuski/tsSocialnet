@@ -3,7 +3,9 @@ import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {ProfileType, setCurrentUser} from "../../redux/profile-reducer";
-import {Navigate, useMatch} from "react-router-dom";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withUrlDataContainerComponent} from "../../hoc/withUrlDataContainerComponent";
 
 class ProfileContainer extends React.Component<WithUrlDataContainerComponentPropsType> {
     componentDidMount() {
@@ -12,8 +14,6 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
     }
 
     render() {
-        if (!this.props.isAuth) return <Navigate replace to="/login"/>
-
         return (
             <div>
                 <Profile {...this.props} profile={this.props.profile}/>
@@ -24,7 +24,6 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
 
 type MapStateToPropsType = {
     profile: ProfileType
-    isAuth: boolean
 }
 type MapDispatchPropsType = {
     setCurrentUser: (userId: number) => void
@@ -35,18 +34,14 @@ export type ProfilePagePropsType = MapStateToPropsType & MapDispatchPropsType
 type MatchPropsType = {
     match: any
 }
-type WithUrlDataContainerComponentPropsType = ProfilePagePropsType & MatchPropsType
+export type WithUrlDataContainerComponentPropsType = ProfilePagePropsType & MatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth
 })
 
-const WithUrlDataContainerComponent = (props: ProfilePagePropsType): JSX.Element => {
-    let match = useMatch('/profile/:userId/');
-    return <ProfileContainer {...props} match={match}/>;
-}
-
-export default connect(mapStateToProps, {
-    setCurrentUser
-})(WithUrlDataContainerComponent)
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {setCurrentUser}),
+    withAuthRedirect,
+    withUrlDataContainerComponent
+)(ProfileContainer)
