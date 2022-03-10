@@ -51,7 +51,7 @@ export const Users = (props: PropsType) => {
                 <div className={s.userBlock}>
                     <div className={s.userNameAndStatus}>
                         <div>{u.name}</div>
-                        <div style={{opacity: 0.5}}>{"u.status"}</div>
+                        <div style={{opacity: 0.5}}>{u.status}</div>
                     </div>
                     <div className={s.userLocation}>
                         <div>{"u.location.country"}</div>

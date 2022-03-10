@@ -3,6 +3,7 @@ import s from "./ProfileInfo.module.css";
 import {ProfileType} from "../../../../redux/profile-reducer";
 import {Preloader} from "../../../common/Preloader/Preloader";
 import defaultUserPhoto from "../../../../assets/images/default-user.png";
+import ProfileStatus from "./ProfileStatus";
 
 export function ProfileInfo(props: { profile: ProfileType }) {
     if (!props.profile) {
@@ -55,6 +56,7 @@ export function ProfileInfo(props: { profile: ProfileType }) {
                     }
                 </div>
             </div>
+            <ProfileStatus status={'My profile status'} />
         </div>
     )
 }
