@@ -2,7 +2,7 @@ import React from 'react';
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {ProfileType, setCurrentUser} from "../../redux/profile-reducer";
+import {getStatus, ProfileType, setCurrentUser, updateStatus} from "../../redux/profile-reducer";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {withUrlDataContainerComponent} from "../../hoc/withUrlDataContainerComponent";
@@ -11,12 +11,17 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
     componentDidMount() {
         let userId = this.props.match ? this.props.match.params.userId : '22187';
         this.props.setCurrentUser(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
         return (
             <div>
-                <Profile {...this.props} profile={this.props.profile}/>
+                <Profile {...this.props}
+                         profile={this.props.profile}
+                         status={this.props.status}
+                         updateStatus={this.props.updateStatus}
+                />
             </div>
         )
     }
@@ -24,9 +29,12 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
 
 type MapStateToPropsType = {
     profile: ProfileType
+    status: string
 }
 type MapDispatchPropsType = {
     setCurrentUser: (userId: number) => void
+    getStatus: (userId: number) => void
+    updateStatus: (status: string) => void
 }
 
 export type ProfilePagePropsType = MapStateToPropsType & MapDispatchPropsType
@@ -38,10 +46,11 @@ export type WithUrlDataContainerComponentPropsType = ProfilePagePropsType & Matc
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status,
 })
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {setCurrentUser}),
+    connect(mapStateToProps, {setCurrentUser, getStatus, updateStatus}),
     withAuthRedirect,
     withUrlDataContainerComponent
 )(ProfileContainer)

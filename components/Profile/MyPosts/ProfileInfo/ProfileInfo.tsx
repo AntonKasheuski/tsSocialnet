@@ -1,11 +1,11 @@
 import React from 'react';
 import s from "./ProfileInfo.module.css";
-import {ProfileType} from "../../../../redux/profile-reducer";
 import {Preloader} from "../../../common/Preloader/Preloader";
 import defaultUserPhoto from "../../../../assets/images/default-user.png";
 import ProfileStatus from "./ProfileStatus";
+import {ProfilePropsType} from "../../Profile";
 
-export function ProfileInfo(props: { profile: ProfileType }) {
+export function ProfileInfo(props: ProfilePropsType) {
     if (!props.profile) {
         return <Preloader />
     }
@@ -56,7 +56,10 @@ export function ProfileInfo(props: { profile: ProfileType }) {
                     }
                 </div>
             </div>
-            <ProfileStatus status={'My profile status'} />
+            <ProfileStatus profile={props.profile}
+                           status={props.status}
+                           updateStatus={props.updateStatus}
+            />
         </div>
     )
 }
