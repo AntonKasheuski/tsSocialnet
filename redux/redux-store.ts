@@ -24,3 +24,6 @@ export type AppThunk<ReturnType = void> = ThunkAction<
     >
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
+
+// @ts-ignore
+window.store = store;

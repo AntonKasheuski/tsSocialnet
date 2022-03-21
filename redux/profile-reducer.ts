@@ -1,7 +1,6 @@
 import {profileAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
-const NEW_POST_TEXT_UPDATING = "NEW-POST-TEXT-UPDATING";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_STATUS = "SET-STATUS";
@@ -35,20 +34,17 @@ export type ProfileType = {
     photos: ProfilePhotosType
 }
 export type ProfilePageType = {
-    newPostText: string
     posts: Array<PostType>
     profile: ProfileType
     status: string
 }
 
-export type NewPostTextUpdatingType = ReturnType<typeof newPostTextUpdating>
 export type AddPostPropsType = ReturnType<typeof addPost>
 export type SetStatusPropsType = ReturnType<typeof setStatus>
 export type SetUserProfileType = ReturnType<typeof setUserProfile>
-export type ProfileActionType = NewPostTextUpdatingType | AddPostPropsType | SetStatusPropsType | SetUserProfileType
+export type ProfileActionType = AddPostPropsType | SetStatusPropsType | SetUserProfileType
 
 const initialState = {
-    newPostText: "",
     posts: [
         {id: 1, post: "Hi, how are you?", likesCount: 15},
         {id: 2, post: "It's my first post", likesCount: 20},
@@ -80,17 +76,14 @@ const initialState = {
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
     switch (action.type) {
-        case NEW_POST_TEXT_UPDATING:
-            return {...state, newPostText: action.newPostText}
         case ADD_POST:
             const newPost: PostType = {
                 id: 4,
-                post: state.newPostText,
+                post: action.newPostText,
                 likesCount: 0
             }
             return {...state,
                 posts: [...state.posts, newPost],
-                newPostText: ""
             }
         case SET_STATUS:
             return {...state, status: action.status}
@@ -101,11 +94,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
     }
 }
 
-export const newPostTextUpdating = (newPostText: string) => {
-    return {type: NEW_POST_TEXT_UPDATING, newPostText: newPostText} as const
-}
-export const addPost = () => {
-    return {type: ADD_POST} as const
+export const addPost = (newPostText: string) => {
+    return {type: ADD_POST, newPostText} as const
 }
 export const setStatus = (status: string) => {
     return {type: SET_STATUS, status} as const

@@ -1,0 +1,10 @@
+.textareaForm {
+}
+
+.textareaForm.error {
+    background-color: #ff6767;
+}
+
+.errorText {
+    color: red;
+}

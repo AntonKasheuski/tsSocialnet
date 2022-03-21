@@ -1,7 +1,7 @@
 import React from 'react';
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {authorizationCheck, AuthType} from "../../redux/auth-reducer";
+import {authorizationCheck, logOut, AuthType} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 
 class HeaderContainer extends React.Component<AuthPropsType> {
@@ -9,13 +9,18 @@ class HeaderContainer extends React.Component<AuthPropsType> {
         this.props.authorizationCheck()
     }
 
+    logOutHandler = () => {
+        this.props.logOut()
+    }
+
     render() {
-        return <Header {...this.props} />
+        return <Header {...this.props} logOutHandler={this.logOutHandler}/>
     }
 }
 
 type MapDispatchPropsType = {
     authorizationCheck: () => void
+    logOut: () => void
 }
 export type AuthPropsType = AuthType & MapDispatchPropsType
 
@@ -26,9 +31,10 @@ const mapStateToProps = (state: AppStateType): AuthType => {
         login: state.auth.login,
         isFetching: state.auth.isFetching,
         isAuth: state.auth.isAuth,
+        errorMessage: state.auth.errorMessage
     }
 }
 
 export default connect(mapStateToProps, {
-    authorizationCheck
+    authorizationCheck, logOut
 })(HeaderContainer)

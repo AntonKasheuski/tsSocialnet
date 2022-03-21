@@ -3,33 +3,16 @@ import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {PostType} from '../../../redux/profile-reducer'
 import {MyPostsPropsType} from "./MyPostsContainer";
+import {NewPostForm} from "./NewPostForm/NewPostForm";
 
 export function MyPosts(props: MyPostsPropsType) {
-    let postsElements = props.posts.map( (post: PostType) => <Post key={post.id} post={post.post} likesCount={post.likesCount}/>);
-
-    const newTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.newPostTextUpdating(e.currentTarget.value)
-    }
-
-    const addPostHandler = () => {
-        props.addPost()
-    }
+    let postsElements = props.posts.map((post: PostType) => <Post key={post.id} post={post.post}
+                                                                  likesCount={post.likesCount}/>);
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
-            <div>
-                <div>
-                    <textarea
-                        value={props.newPostText}
-                        onChange={newTextHandler}
-                        placeholder={"Enter your text"}
-                    />
-                </div>
-                <div>
-                    <button onClick={addPostHandler}>Add post</button>
-                </div>
-            </div>
+            <NewPostForm/>
             <div className={s.posts}>
                 {postsElements}
             </div>

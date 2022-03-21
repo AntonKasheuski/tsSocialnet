@@ -1,4 +1,3 @@
-const NEW_MESSAGE_TEXT_UPDATING = "NEW-MESSAGE-TEXT-UPDATING";
 const ADD_MESSAGE = "ADD-MESSAGE";
 
 export type DialogType = {
@@ -15,9 +14,8 @@ export type MessagesPageType = {
     messages: Array<MessageType>
 }
 
-export type NewMessageTextUpdatingPropsType = ReturnType<typeof newMessageTextUpdatingActionCreator>
-export type AddMessagePropsType = ReturnType<typeof addMessageActionCreator>
-export type DialogsActionType = NewMessageTextUpdatingPropsType | AddMessagePropsType
+export type AddMessagePropsType = ReturnType<typeof addMessage>
+export type DialogsActionType = AddMessagePropsType
 
 const initialState: MessagesPageType = {
     dialogs: [
@@ -40,12 +38,10 @@ const initialState: MessagesPageType = {
 
 export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionType): MessagesPageType => {
     switch (action.type) {
-        case NEW_MESSAGE_TEXT_UPDATING:
-            return {...state, newMessageText: action.newMessageText}
         case ADD_MESSAGE:
             const newMessage = {
                 id: 6,
-                message: state.newMessageText
+                message: action.newMessageText
             }
             return {...state,
                 messages: [...state.messages, newMessage],
@@ -56,9 +52,6 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: D
     }
 }
 
-export const newMessageTextUpdatingActionCreator = (newMessageText: string) => {
-    return {type: NEW_MESSAGE_TEXT_UPDATING, newMessageText: newMessageText} as const
-}
-export const addMessageActionCreator = () => {
-    return {type: ADD_MESSAGE} as const
+export const addMessage = (newMessageText: string) => {
+    return {type: ADD_MESSAGE, newMessageText} as const
 }

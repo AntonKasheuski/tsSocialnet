@@ -1,0 +1,10 @@
+.inputForm {
+}
+
+.inputForm.error {
+    background-color: #ff6767;
+}
+
+.errorText {
+    color: red;
+}

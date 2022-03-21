@@ -9,7 +9,7 @@ import {withUrlDataContainerComponent} from "../../hoc/withUrlDataContainerCompo
 
 class ProfileContainer extends React.Component<WithUrlDataContainerComponentPropsType> {
     componentDidMount() {
-        let userId = this.props.match ? this.props.match.params.userId : '22187';
+        let userId = this.props.match ? this.props.match.params.userId : this.props.userId;
         this.props.setCurrentUser(userId)
         this.props.getStatus(userId)
     }
@@ -30,6 +30,7 @@ class ProfileContainer extends React.Component<WithUrlDataContainerComponentProp
 type MapStateToPropsType = {
     profile: ProfileType
     status: string
+    userId: number
 }
 type MapDispatchPropsType = {
     setCurrentUser: (userId: number) => void
@@ -47,6 +48,7 @@ export type WithUrlDataContainerComponentPropsType = ProfilePagePropsType & Matc
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    userId: state.auth.userId
 })
 
 export default compose<React.ComponentType>(
