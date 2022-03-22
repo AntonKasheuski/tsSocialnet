@@ -38,18 +38,17 @@ export type UsersPageType = {
 type FollowUserActionType = ReturnType<typeof followUserAccept>
 type UnfollowUserActionType = ReturnType<typeof unfollowUserAccept>
 type SetUsersActionType = ReturnType<typeof setUsers>
-type SetCurrentPageType = ReturnType<typeof setCurrentPage>
-type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCount>
-type ToggleFetchingType = ReturnType<typeof toggleFetching>
-type FollowingInProgressType = ReturnType<typeof toggleFollowingProgress>
-export type UsersActionType =
-    FollowUserActionType
+type SetCurrentPageActionType = ReturnType<typeof setCurrentPage>
+type SetTotalUsersCountActionType = ReturnType<typeof setTotalUsersCount>
+type ToggleFetchingActionType = ReturnType<typeof toggleFetching>
+type FollowingInProgressActionType = ReturnType<typeof toggleFollowingProgress>
+export type UsersReducerActionType = FollowUserActionType
     | UnfollowUserActionType
     | SetUsersActionType
-    | SetCurrentPageType
-    | SetTotalUsersCountType
-    | ToggleFetchingType
-    | FollowingInProgressType
+    | SetCurrentPageActionType
+    | SetTotalUsersCountActionType
+    | ToggleFetchingActionType
+    | FollowingInProgressActionType
 
 const initialState = {
     users: [],
@@ -60,7 +59,7 @@ const initialState = {
     followingInProgressArray: [],
 }
 
-export const usersReducer = (state: UsersPageType = initialState, action: UsersActionType): UsersPageType => {
+export const usersReducer = (state: UsersPageType = initialState, action: UsersReducerActionType): UsersPageType => {
     switch (action.type) {
         case FOLLOW:
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: true} : u)};

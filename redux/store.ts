@@ -1,6 +1,5 @@
-import {profileReducer, ProfileActionType} from "./profile-reducer";
-import {dialogsReducer, DialogsActionType} from "./dialogs-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
+import {ProfileReducerActionType} from "./profile-reducer";
+import {DialogsReducerActionType} from "./dialogs-reducer";
 
 type DialogType = {
     id: number,
@@ -32,7 +31,7 @@ type RootStateType = {
     messagesPage: DialogsPageType,
     profilePage: ProfilePageType
 }
-type ActionType = ProfileActionType | DialogsActionType
+type ActionType = ProfileReducerActionType | DialogsReducerActionType
 type StoreType = {
     _state: RootStateType
     _callSubscriber: () => void

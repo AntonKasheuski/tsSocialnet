@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {Navbar} from "./components/Navbar/Navbar";
@@ -10,11 +10,23 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
+import {useDispatch, useSelector} from "react-redux";
+import {initialization} from "./redux/app-reducer";
+import {AppStateType} from "./redux/redux-store";
+import {Preloader} from "./components/common/Preloader/Preloader";
 
 function App() {
+    const initializationSuccess = useSelector<AppStateType, boolean>(state => state.app.initializationSuccess)
+    const dispatch = useDispatch()
 
-    return (
-        <div className='app-wrapper'>
+    useEffect( () => {
+        dispatch(initialization())
+    }, [])
+
+    if (!initializationSuccess) {
+        return <Preloader/>
+    } else {
+        return <div className='app-wrapper'>
             <HeaderContainer/>
             <Navbar/>
             <div className='app-wrapper-content'>
@@ -30,7 +42,7 @@ function App() {
                 </Routes>
             </div>
         </div>
-    )
+    }
 }
 
 export default App;

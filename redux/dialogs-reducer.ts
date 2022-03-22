@@ -14,8 +14,8 @@ export type MessagesPageType = {
     messages: Array<MessageType>
 }
 
-export type AddMessagePropsType = ReturnType<typeof addMessage>
-export type DialogsActionType = AddMessagePropsType
+export type AddMessageActionType = ReturnType<typeof addMessage>
+export type DialogsReducerActionType = AddMessageActionType
 
 const initialState: MessagesPageType = {
     dialogs: [
@@ -36,7 +36,7 @@ const initialState: MessagesPageType = {
     ]
 }
 
-export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionType): MessagesPageType => {
+export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsReducerActionType): MessagesPageType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const newMessage = {

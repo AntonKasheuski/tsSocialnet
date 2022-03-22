@@ -13,8 +13,13 @@ export function Header(props: AuthType & {
             <div className={s.loginBlock}>
                 {props.isAuth
                     ? <>
-                        <div>{props.login}</div>
-                        <button onClick={props.logOutHandler}>Logout</button>
+                        {props.isFetching
+                            ? <Preloader/>
+                            : <>
+                                <div>{props.login}</div>
+                                <button onClick={props.logOutHandler}>Logout</button>
+                            </>
+                        }
                     </>
                     : <>
                         {props.isFetching

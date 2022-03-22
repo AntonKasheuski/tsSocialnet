@@ -36,7 +36,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
     const errorMessage = useSelector<AppStateType, string | null>(state => state.auth.errorMessage)
-    console.log(errorMessage)
 
     const formik = useFormik({
         initialValues: {

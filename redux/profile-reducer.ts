@@ -39,10 +39,10 @@ export type ProfilePageType = {
     status: string
 }
 
-export type AddPostPropsType = ReturnType<typeof addPost>
-export type SetStatusPropsType = ReturnType<typeof setStatus>
-export type SetUserProfileType = ReturnType<typeof setUserProfile>
-export type ProfileActionType = AddPostPropsType | SetStatusPropsType | SetUserProfileType
+export type AddPostActionType = ReturnType<typeof addPost>
+export type SetStatusActionType = ReturnType<typeof setStatus>
+export type SetUserProfileActionType = ReturnType<typeof setUserProfile>
+export type ProfileReducerActionType = AddPostActionType | SetStatusActionType | SetUserProfileActionType
 
 const initialState = {
     posts: [
@@ -74,7 +74,7 @@ const initialState = {
     status: "",
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerActionType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostType = {

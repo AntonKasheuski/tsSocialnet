@@ -15,9 +15,9 @@ export type AuthType = {
 }
 
 type SetUserDataActionType = ReturnType<typeof setAuthUserData>
-type ToggleFetchingType = ReturnType<typeof toggleFetching>
-type SetErrorMessageType = ReturnType<typeof setErrorMessage>
-export type UsersActionType = SetUserDataActionType | ToggleFetchingType | SetErrorMessageType
+type ToggleFetchingActionType = ReturnType<typeof toggleFetching>
+type SetErrorMessageActionType = ReturnType<typeof setErrorMessage>
+export type AuthReducerActionType = SetUserDataActionType | ToggleFetchingActionType | SetErrorMessageActionType
 
 const initialState = {
     userId: NaN,
@@ -28,7 +28,7 @@ const initialState = {
     errorMessage: null
 }
 
-export const authReducer = (state: AuthType = initialState, action: UsersActionType): AuthType => {
+export const authReducer = (state: AuthType = initialState, action: AuthReducerActionType): AuthType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {...state, ...action.payload};
@@ -53,7 +53,7 @@ export const setErrorMessage = (errorMessage: string | null) => {
 
 export const authorizationCheck = (): AppThunk => (dispatch) => {
     dispatch(toggleFetching(true))
-    authAPI.authorizationCheck()
+    return authAPI.authorizationCheck()
         .then(response => {
             dispatch(toggleFetching(false))
             if (response.resultCode === 0) {
@@ -67,8 +67,10 @@ export const authorizationCheck = (): AppThunk => (dispatch) => {
         });
 }
 export const logIn = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+    dispatch(toggleFetching(true))
     authAPI.logIn(email, password, rememberMe)
         .then(response => {
+            dispatch(toggleFetching(false))
             if (response.resultCode === 0) {
                 dispatch(authorizationCheck())
             }
@@ -78,8 +80,10 @@ export const logIn = (email: string, password: string, rememberMe: boolean): App
         })
 }
 export const logOut = (): AppThunk => (dispatch) => {
+    dispatch(toggleFetching(true))
     authAPI.logOut()
         .then(response => {
+            dispatch(toggleFetching(false))
             if (response.resultCode === 0) {
                 dispatch(setAuthUserData(NaN, "", "", false))
             }
