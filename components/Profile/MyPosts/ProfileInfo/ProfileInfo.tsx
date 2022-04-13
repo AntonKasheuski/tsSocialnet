@@ -2,8 +2,8 @@ import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {Preloader} from "../../../common/Preloader/Preloader";
 import defaultUserPhoto from "../../../../assets/images/default-user.png";
-import ProfileStatus from "./ProfileStatus";
 import {ProfilePropsType} from "../../Profile";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 export function ProfileInfo(props: ProfilePropsType) {
     if (!props.profile) {
@@ -56,7 +56,7 @@ export function ProfileInfo(props: ProfilePropsType) {
                     }
                 </div>
             </div>
-            <ProfileStatus profile={props.profile}
+            <ProfileStatusWithHooks profile={props.profile}
                            status={props.status}
                            updateStatus={props.updateStatus}
             />
