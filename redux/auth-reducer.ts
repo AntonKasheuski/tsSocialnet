@@ -1,9 +1,11 @@
 import {authAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 
-const SET_USER_DATA = "SET-USER-DATA"
-const TOGGLE_FETCHING = "TOGGLE-FETCHING"
-const SET_ERROR_MESSAGE = "SET-ERROR-MESSAGE"
+enum AuthActionType {
+    SET_USER_DATA = "Auth/SET-USER-DATA",
+    TOGGLE_FETCHING = "Auth/TOGGLE-FETCHING",
+    SET_ERROR_MESSAGE = "Auth/SET-ERROR-MESSAGE",
+}
 
 export type AuthType = {
     userId: number
@@ -13,12 +15,6 @@ export type AuthType = {
     isAuth: boolean
     errorMessage: string | null
 }
-
-type SetUserDataActionType = ReturnType<typeof setAuthUserData>
-type ToggleFetchingActionType = ReturnType<typeof toggleFetching>
-type SetErrorMessageActionType = ReturnType<typeof setErrorMessage>
-export type AuthReducerActionType = SetUserDataActionType | ToggleFetchingActionType | SetErrorMessageActionType
-
 const initialState = {
     userId: NaN,
     email: "",
@@ -28,64 +24,62 @@ const initialState = {
     errorMessage: null
 }
 
+export type AuthReducerActionType = SetUserDataActionType | ToggleFetchingActionType | SetErrorMessageActionType
 export const authReducer = (state: AuthType = initialState, action: AuthReducerActionType): AuthType => {
     switch (action.type) {
-        case SET_USER_DATA:
+        case AuthActionType.SET_USER_DATA:
             return {...state, ...action.payload};
-        case TOGGLE_FETCHING:
+        case AuthActionType.TOGGLE_FETCHING:
             return {...state, isFetching: action.isFetching};
-        case SET_ERROR_MESSAGE:
+        case AuthActionType.SET_ERROR_MESSAGE:
             return {...state, errorMessage: action.errorMessage}
         default:
             return state;
     }
 }
 
+type SetUserDataActionType = ReturnType<typeof setAuthUserData>
 export const setAuthUserData = (userId: number, email: string, login: string, isAuth: boolean) => {
-    return {type: SET_USER_DATA, payload: {userId, email, login, isAuth}} as const
+    return {type: AuthActionType.SET_USER_DATA, payload: {userId, email, login, isAuth}} as const
 }
+type ToggleFetchingActionType = ReturnType<typeof toggleFetching>
 export const toggleFetching = (isFetching: boolean) => {
-    return {type: TOGGLE_FETCHING, isFetching} as const
+    return {type: AuthActionType.TOGGLE_FETCHING, isFetching} as const
 }
+type SetErrorMessageActionType = ReturnType<typeof setErrorMessage>
 export const setErrorMessage = (errorMessage: string | null) => {
-    return {type: SET_ERROR_MESSAGE, errorMessage} as const
+    return {type: AuthActionType.SET_ERROR_MESSAGE, errorMessage} as const
 }
 
-export const authorizationCheck = (): AppThunk => (dispatch) => {
+export const authorizationCheck = (): AppThunk => async (dispatch) => {
     dispatch(toggleFetching(true))
-    return authAPI.authorizationCheck()
-        .then(response => {
-            dispatch(toggleFetching(false))
-            if (response.resultCode === 0) {
-                dispatch(setAuthUserData(
-                    response.data.id,
-                    response.data.email,
-                    response.data.login,
-                    true
-                ))
-            }
-        });
+    let response = await authAPI.authorizationCheck()
+    dispatch(toggleFetching(false))
+    if (response.resultCode === 0) {
+        dispatch(setAuthUserData(
+            response.data.id,
+            response.data.email,
+            response.data.login,
+            true
+        ))
+    }
 }
-export const logIn = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+export const logIn = (email: string, password: string, rememberMe: boolean): AppThunk => async (dispatch) => {
     dispatch(toggleFetching(true))
-    authAPI.logIn(email, password, rememberMe)
-        .then(response => {
-            dispatch(toggleFetching(false))
-            if (response.resultCode === 0) {
-                dispatch(authorizationCheck())
-            }
-            if (response.resultCode === 1) {
-                dispatch(setErrorMessage(response.messages[0]))
-            }
-        })
+    let response = await authAPI.logIn(email, password, rememberMe)
+    dispatch(toggleFetching(false))
+    if (response.resultCode === 0) {
+        dispatch(authorizationCheck())
+    }
+    if (response.resultCode === 1) {
+        dispatch(setErrorMessage(response.messages[0]))
+    }
 }
-export const logOut = (): AppThunk => (dispatch) => {
+export const logOut = (): AppThunk => async (dispatch) => {
     dispatch(toggleFetching(true))
-    authAPI.logOut()
-        .then(response => {
-            dispatch(toggleFetching(false))
-            if (response.resultCode === 0) {
-                dispatch(setAuthUserData(NaN, "", "", false))
-            }
-        })
+    let response = await authAPI.logOut()
+    dispatch(toggleFetching(false))
+    if (response.resultCode === 0) {
+        dispatch(setAuthUserData(NaN, "", "", false))
+    }
 }

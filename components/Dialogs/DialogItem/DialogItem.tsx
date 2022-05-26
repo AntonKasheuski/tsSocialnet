@@ -1,11 +1,14 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './../Dialogs.module.css';
-import {DialogItemPropsType} from "./DialogItemContainer";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
+import {DialogType} from "../../../redux/dialogs-reducer";
 
-export function DialogItem(props: DialogItemPropsType) {
+export const DialogItem = () => {
+    const dialogs = useSelector<AppStateType, DialogType[]>(state => state.messagesPage.dialogs)
 
-    let dialogsElements = props.dialogs.map(d => (
+    let dialogsElements = dialogs.map(d => (
         <div key={d.id}>
             <img
                 src='https://is3-ssl.mzstatic.com/image/thumb/Purple49/v4/c6/33/dd/c633dd45-95be-f814-bec6-9e84ee35d482/source/512x512bb.jpg'/>

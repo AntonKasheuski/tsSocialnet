@@ -24,21 +24,21 @@ export const usersAPI = {
 }
 
 export const authAPI = {
-    authorizationCheck() {
-        return instance.get(`auth/me`)
-            .then(response => response.data)
+    async authorizationCheck() {
+        let response = await instance.get(`auth/me`)
+        return response.data
     },
-    logIn(email: string, password: string, rememberMe: boolean) {
-        return instance.post(`auth/login`, {
+    async logIn(email: string, password: string, rememberMe: boolean) {
+        let response = await instance.post(`auth/login`, {
             email,
             password,
             rememberMe
         })
-            .then(response => response.data)
+        return response.data
     },
-    logOut() {
-        return instance.delete(`/auth/login`)
-            .then(response => response.data)
+    async logOut() {
+        let response = await instance.delete(`/auth/login`)
+        return response.data
     }
 }
 

@@ -1,22 +1,22 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import {MessageContainer} from "./Message/MessageContainer";
-import {DialogItemContainer} from "./DialogItem/DialogItemContainer";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
+import {DialogItem} from "./DialogItem/DialogItem";
+import {Message} from "./Message/Message";
 
-export function Dialogs() {
+export const Dialogs = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
     if (!isAuth) return <Navigate replace to="/login"/>
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-               <DialogItemContainer />
+                <DialogItem/>
             </div>
             <div className={s.messages}>
-                <MessageContainer />
+                <Message/>
             </div>
         </div>
     )

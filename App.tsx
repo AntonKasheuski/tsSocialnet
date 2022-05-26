@@ -6,7 +6,7 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {Routes, Route, Navigate} from 'react-router-dom';
-import UsersContainer from "./components/Users/UsersContainer";
+import {UsersContainer} from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -15,11 +15,12 @@ import {initialization} from "./redux/app-reducer";
 import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 
+
 function App() {
     const initializationSuccess = useSelector<AppStateType, boolean>(state => state.app.initializationSuccess)
     const dispatch = useDispatch()
 
-    useEffect( () => {
+    useEffect(() => {
         dispatch(initialization())
     }, [])
 

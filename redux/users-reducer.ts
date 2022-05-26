@@ -124,7 +124,7 @@ export const getSelectedPageUsers = (pageNumber: number, pageSize: number): AppT
             dispatch(setUsers(response.items))
         })
 }
-export const followUser = (userId: number): AppThunk => (dispatch) => {
+export const followUserTC = (userId: number): AppThunk => (dispatch) => {
     dispatch(toggleFollowingProgress(true, userId))
     usersAPI.followUser(userId)
         .then(response => {
@@ -136,7 +136,7 @@ export const followUser = (userId: number): AppThunk => (dispatch) => {
             }
         })
 }
-export const unfollowUser = (userId: number): AppThunk => (dispatch) => {
+export const unfollowUserTC = (userId: number): AppThunk => (dispatch) => {
     dispatch(toggleFollowingProgress(true, userId))
     usersAPI.unfollowUser(userId)
         .then(response => {
