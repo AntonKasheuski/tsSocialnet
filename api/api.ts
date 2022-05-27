@@ -9,17 +9,17 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data)
+    async getUsers(currentPage: number, pageSize: number) {
+        let response = await instance.get(`users?page=${currentPage}&count=${pageSize}`)
+        return response.data
     },
-    followUser(userId: number) {
-        return instance.post(`follow/${userId}`)
-            .then(response => response.data)
+    async followUser(userId: number) {
+        let response = await instance.post(`follow/${userId}`)
+        return response.data
     },
-    unfollowUser(userId: number) {
-        return instance.delete(`follow/${userId}`)
-            .then(response => response.data)
+    async unfollowUser(userId: number) {
+        let response = await instance.delete(`follow/${userId}`)
+        return response.data
     }
 }
 
@@ -43,12 +43,13 @@ export const authAPI = {
 }
 
 export const profileAPI = {
-    getCurrentUser(userId: number) {
-        return instance.get(`profile/` + userId)
-            .then(response => response.data)
+    async getCurrentUser(userId: number) {
+        let response = await instance.get(`profile/` + userId)
+        return response.data
     },
-    getStatus(userId: number) {
-        return instance.get(`profile/status/` + userId)
+    async getStatus(userId: number) {
+        let response = await instance.get(`profile/status/` + userId)
+        return response.data
     },
     updateStatus(status: string) {
         return instance.put(`profile/status`, {status})

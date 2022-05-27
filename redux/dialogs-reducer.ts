@@ -1,4 +1,6 @@
-const ADD_MESSAGE = "ADD-MESSAGE";
+enum DialogsActionType {
+    ADD_MESSAGE = "Dialogs/ADD-MESSAGE",
+}
 
 export type DialogType = {
     id: number,
@@ -13,9 +15,6 @@ export type MessagesPageType = {
     newMessageText: string,
     messages: Array<MessageType>
 }
-
-export type AddMessageActionType = ReturnType<typeof addMessage>
-export type DialogsReducerActionType = AddMessageActionType
 
 const initialState: MessagesPageType = {
     dialogs: [
@@ -36,9 +35,10 @@ const initialState: MessagesPageType = {
     ]
 }
 
+export type DialogsReducerActionType = AddMessageActionType
 export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsReducerActionType): MessagesPageType => {
     switch (action.type) {
-        case ADD_MESSAGE:
+        case DialogsActionType.ADD_MESSAGE:
             const newMessage = {
                 id: 6,
                 message: action.newMessageText
@@ -52,6 +52,7 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: D
     }
 }
 
+export type AddMessageActionType = ReturnType<typeof addMessage>
 export const addMessage = (newMessageText: string) => {
-    return {type: ADD_MESSAGE, newMessageText} as const
+    return {type: DialogsActionType.ADD_MESSAGE, newMessageText} as const
 }
