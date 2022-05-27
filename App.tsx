@@ -6,7 +6,7 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {Routes, Route, Navigate} from 'react-router-dom';
-import {UsersContainer} from "./components/Users/UsersContainer";
+import {UsersPage} from "./components/Users/UsersPage";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -35,7 +35,7 @@ function App() {
                     <Route path="/" element={<Navigate replace to="/profile"/>}/>
                     <Route path="/profile/*" element={<ProfileContainer/>}/>
                     <Route path="/dialogs" element={<Dialogs/>}/>
-                    <Route path="/users" element={<UsersContainer/>}/>
+                    <Route path="/users" element={<UsersPage/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>

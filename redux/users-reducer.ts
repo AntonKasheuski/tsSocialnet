@@ -33,7 +33,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgressArray: (number)[]
+    followingInProgressArray: number[]
 }
 
 const initialState = {
