@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {logOut} from "../../redux/authSlice";
 import {Preloader} from "../common/Preloader/Preloader";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import logo from "../../assets/images/site-logo.png";
 
 export function Header() {
     const isAuth = useAppSelector(state => state.auth.isAuth)
@@ -17,7 +18,11 @@ export function Header() {
 
     return (
         <header className={s.header}>
-            <img src={'https://assets.turbologo.com/blog/en/2018/03/19085254/prozrachniy-logo-1-800x575.png'}/>
+            <div className={s.logoBlock}>
+                <img src={logo} alt={'Site logo'} className={s.logo}/>
+                <h3>Social Net</h3>
+            </div>
+            <input className={s.input} placeholder={"Search for user..."}></input>
             <div className={s.loginBlock}>
                 {isAuth
                     ? <>

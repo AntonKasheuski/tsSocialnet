@@ -1,17 +1,35 @@
 .header {
     grid-area: h;
-    background-color: green;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+.logoBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logoBlock h3 {
+    color: #444444;
 }
 
 .header img {
-    width: 80px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
-.loginBlock {
-    float: right;
-    color: white;
-}
-
-.loginBlock a {
-    color: white;
+.input {
+    width: 400px;
+    height: 30px;
+    background-color: #f6f6f6;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    padding-left: 10px;
 }

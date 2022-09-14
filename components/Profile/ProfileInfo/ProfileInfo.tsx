@@ -21,9 +21,6 @@ export function ProfileInfo() {
     } else {
         return (
             <div>
-                <div>
-                    <img src={'https://www.nycgovparks.org/facilities/images/beaches/coney-island-beach-content.jpg'}/>
-                </div>
                 <div className={s.descriptionBlock}>
                     <img src={profile.photos.large ? profile.photos.large : defaultUserPhoto} className={s.userPhoto}/>
                     <div className={s.userInfo}>

@@ -1,6 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {profileAPI} from "../api/api";
 
+type ThunkReturnType<T = {}> = {
+    data: T,
+    resultCode: number,
+    messages: string[],
+}
 
 export const setCurrentUser = createAsyncThunk(
     'profile/setCurrentUser',
@@ -8,26 +13,18 @@ export const setCurrentUser = createAsyncThunk(
         return await profileAPI.getCurrentUser(userId) as ProfileType
     }
 )
-
 export const getStatus = createAsyncThunk(
     'profile/getStatus',
     async (userId: number) => {
         return await profileAPI.getStatus(userId)
     }
 )
-
-type updateStatusReturnType = {
-    data: {},
-    resultCode: number,
-    messages: string[],
-}
 export const updateStatus = createAsyncThunk(
     'profile/updateStatus',
     async (status: string) => {
-        return await profileAPI.updateStatus(status) as updateStatusReturnType
+        return await profileAPI.updateStatus(status) as ThunkReturnType
     }
 )
-
 
 export type PostType = {
     id: number
@@ -104,13 +101,7 @@ export const profileSlice = createSlice({
                 likesCount: 0
             }
             state.posts.push(newPost)
-        },
-        setStatus: (state, action: PayloadAction<string>) => {
-            state.status = action.payload
-        },
-        setUserProfile: (state, action: PayloadAction<ProfileType>) => {
-            state.profile = action.payload
-        },
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -128,6 +119,6 @@ export const profileSlice = createSlice({
     }
 })
 
-export const {addPost, setStatus, setUserProfile} = profileSlice.actions
+export const {addPost} = profileSlice.actions
 
 export default profileSlice.reducer

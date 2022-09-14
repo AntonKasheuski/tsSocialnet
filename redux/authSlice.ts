@@ -2,33 +2,27 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {authAPI} from "../api/api";
 
-
-type AuthorizationCheckReturnType = {
-    data: { id: number, email: string, login: string },
-    resultCode: number,
-    messages: string[],
-}
-export const authorizationCheck = createAsyncThunk(
-    'auth/authorizationCheck',
-    async () => {
-        return await authAPI.authorizationCheck() as AuthorizationCheckReturnType
-    }
-)
-
 type LogInInputType = {
     email: string,
     password: string,
     rememberMe: boolean,
 }
-type LogInReturnType = {
-    data: {},
+type ThunkReturnType<T = {}> = {
+    data: T,
     resultCode: number,
     messages: string[],
 }
+
+export const authorizationCheck = createAsyncThunk(
+    'auth/authorizationCheck',
+    async () => {
+        return await authAPI.authorizationCheck() as ThunkReturnType<{ id: number, email: string, login: string }>
+    }
+)
 export const logIn = createAsyncThunk(
     'auth/logIn',
     async ({email, password, rememberMe}: LogInInputType, thunkAPI) => {
-        let res = await authAPI.logIn(email, password, rememberMe) as LogInReturnType
+        let res = await authAPI.logIn(email, password, rememberMe) as ThunkReturnType
         if (res.resultCode === 0) {
             thunkAPI.dispatch(authorizationCheck())
         } else {
@@ -36,16 +30,10 @@ export const logIn = createAsyncThunk(
         }
     }
 )
-
-type LogOutReturnType = {
-    data: {},
-    resultCode: number,
-    messages: string[],
-}
 export const logOut = createAsyncThunk(
     'auth/logOut',
     async () => {
-        return await authAPI.logOut() as LogOutReturnType
+        return await authAPI.logOut() as ThunkReturnType
     }
 )
 
@@ -73,15 +61,6 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setAuthUserData: (state, action: PayloadAction<{ userId: number, email: string, login: string, isAuth: boolean }>) => {
-            state.userId = action.payload.userId
-            state.email = action.payload.email
-            state.login = action.payload.login
-            state.isAuth = action.payload.isAuth
-        },
-        toggleFetching: (state, action: PayloadAction<{ isFetching: boolean }>) => {
-            state.isFetching = action.payload.isFetching
-        },
         setErrorMessage: (state, action: PayloadAction<{ errorMessage: string | null }>) => {
             state.errorMessage = action.payload.errorMessage
         },
@@ -129,6 +108,6 @@ export const authSlice = createSlice({
     },
 })
 
-export const {setAuthUserData, toggleFetching, setErrorMessage} = authSlice.actions
+export const {setErrorMessage} = authSlice.actions
 
 export default authSlice.reducer

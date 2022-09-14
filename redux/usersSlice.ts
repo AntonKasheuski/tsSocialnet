@@ -1,7 +1,6 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {usersAPI} from "../api/api";
 import {RootState} from "./rtk-store";
-
 
 type GetSelectedPageUsersInputType = {
     pageNumber: number,
@@ -12,37 +11,33 @@ type GetPageUsersReturnType = {
     totalCount: number,
     error: string,
 }
+type ThunkReturnType<T = {}> = {
+    data: T,
+    resultCode: number,
+    messages: string[],
+}
+
 export const getPageUsers = createAsyncThunk(
     'users/getSelectedPageUsers',
     async ({pageNumber, pageSize}: GetSelectedPageUsersInputType) => {
         return await usersAPI.getUsers(pageNumber, pageSize) as GetPageUsersReturnType
     }
 )
-
-type FollowUserReturnType = {
-    resultCode: number,
-    messages: string[],
-    data: {},
-}
 export const toggleFollowUser = createAsyncThunk(
-    'profile/followUser',
+    'users/followUser',
     async (userId: number, thunkAPI) => {
         let state = thunkAPI.getState() as RootState
         let user = state.usersPage.users.find(u => u.id === userId)
         if (user && user.followed) {
-            return await usersAPI.unfollowUser(userId) as FollowUserReturnType
+            return await usersAPI.unfollowUser(userId) as ThunkReturnType
         } else {
-            return await usersAPI.followUser(userId) as FollowUserReturnType
+            return await usersAPI.followUser(userId) as ThunkReturnType
         }
 
     }
 )
 
 
-export type LocationType = {
-    country: string
-    city: string
-}
 type UserPhotosType = {
     small: string
     large: string
@@ -52,7 +47,6 @@ export type UserType = {
     name: string
     photos: UserPhotosType
     status: string
-    location: LocationType
     followed: boolean
 }
 export type UsersPageType = {
@@ -76,31 +70,7 @@ const initialState: UsersPageType = {
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {
-        followUserAccept: (state, action: PayloadAction<number>) => {
-            state.users.map(u => u.id === action.payload ? u.followed = true : u)
-        },
-        unfollowUserAccept: (state, action: PayloadAction<number>) => {
-            state.users.map(u => u.id === action.payload ? u.followed = false : u)
-        },
-        setUsers: (state, action: PayloadAction<UserType[]>) => {
-            state.users = action.payload
-        },
-        setCurrentPage: (state, action: PayloadAction<number>) => {
-            state.currentPage = action.payload
-        },
-        setTotalUsersCount: (state, action: PayloadAction<number>) => {
-            state.totalUsersCount = action.payload
-        },
-        toggleFetching: (state, action: PayloadAction<boolean>) => {
-            state.isFetching = action.payload
-        },
-        toggleFollowingProgress: (state, action: PayloadAction<{ followingProgress: boolean, userId: number }>) => {
-            action.payload.followingProgress
-                ? state.followingInProgressArray.push(action.payload.userId)
-                : state.followingInProgressArray.filter(id => id !== action.payload.userId)
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(getPageUsers.pending, (state) => {
@@ -125,15 +95,5 @@ export const usersSlice = createSlice({
             })
     }
 })
-
-export const {
-    followUserAccept,
-    unfollowUserAccept,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleFetching,
-    toggleFollowingProgress
-} = usersSlice.actions
 
 export default usersSlice.reducer

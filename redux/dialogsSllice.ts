@@ -39,7 +39,7 @@ export const dialogsSlice = createSlice({
     reducers: {
         addMessage: (state, action: PayloadAction<string>) => {
             const newMessage: MessageType = {
-                id: 6,
+                id: state.messages.length + 1,
                 message: action.payload
             }
             state.messages.push(newMessage)
