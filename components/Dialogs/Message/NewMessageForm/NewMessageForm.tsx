@@ -1,8 +1,8 @@
 import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {addMessage} from "../../../../redux/dialogs-reducer";
-import {useDispatch} from "react-redux";
 import s from "./NewMessageForm.module.css"
+import {addMessage} from "../../../../redux/dialogsSllice";
+import {useAppDispatch} from "../../../../hooks/hooks";
 
 
 const validate = (values: { newMessageText: string }) => {
@@ -16,7 +16,7 @@ const validate = (values: { newMessageText: string }) => {
 }
 
 export const NewMessageForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     return (
         <Formik

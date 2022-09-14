@@ -3,7 +3,6 @@ import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
 
-
 type MapStatePropsType = {
     posts: Array<PostType>
 }

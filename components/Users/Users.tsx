@@ -1,21 +1,20 @@
 import React from 'react';
 import s from "./Users.module.css"
 import defaultUserPhoto from "../../assets/images/default-user.png"
-import {followUserTC, unfollowUserTC, UserType} from "../../redux/users-reducer";
+import {followUser, unfollowUser} from "../../redux/usersSlice";
 import {NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 export const Users = () => {
-    const users = useSelector<AppStateType, UserType[]>(state => state.usersPage.users)
-    const followingInProgressArray = useSelector<AppStateType, number[]>(state => state.usersPage.followingInProgressArray)
-    const dispatch = useDispatch()
+    const users = useAppSelector(state => state.usersPage.users)
+    const followingInProgressArray = useAppSelector(state => state.usersPage.followingInProgressArray)
+    const dispatch = useAppDispatch()
 
-    const followUser = (userId: number) => {
-        dispatch(followUserTC(userId))
+    const followUserHandler = (userId: number) => {
+        dispatch(followUser(userId))
     }
-    const unfollowUser = (userId: number) => {
-        dispatch(unfollowUserTC(userId))
+    const unfollowUserHandler = (userId: number) => {
+        dispatch(unfollowUser(userId))
     }
 
     return <div>
@@ -28,11 +27,11 @@ export const Users = () => {
                     {u.followed
                         ? <button disabled={followingInProgressArray.some(id => id === u.id)}
                                   onClick={() => {
-                                      unfollowUser(u.id)
+                                      unfollowUserHandler(u.id)
                                   }}>Unfollow</button>
                         : <button disabled={followingInProgressArray.some(id => id === u.id)}
                                   onClick={() => {
-                                      followUser(u.id)
+                                      followUserHandler(u.id)
                                   }}>Follow</button>}
                 </div>
                 <div className={s.userBlock}>

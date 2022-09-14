@@ -1,23 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileType} from "../../redux/profile-reducer";
+import {useAppSelector} from "../../hooks/hooks";
+import {getStatus, setCurrentUser} from "../../redux/profileSlice";
+import {MyPosts} from "./MyPosts/MyPosts";
 
-export type ProfilePropsType = {
-    profile: ProfileType
-    status: string
-    updateStatus: (status: string) => void
-}
+export function Profile() {
+    const userId = useAppSelector(state => state.auth.userId)
 
-export function Profile(props: ProfilePropsType) {
+    useEffect(() => {
+        setCurrentUser(userId)
+        getStatus(userId)
+    }, [])
 
     return (
         <div>
-            <ProfileInfo profile={props.profile}
-                         status={props.status}
-                         updateStatus={props.updateStatus}
-            />
-            <MyPostsContainer />
+            <ProfileInfo/>
+            <MyPosts/>
         </div>
     )
 }

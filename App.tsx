@@ -8,17 +8,19 @@ import {Settings} from './components/Settings/Settings';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import {UsersPage} from "./components/Users/UsersPage";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {useDispatch, useSelector} from "react-redux";
-import {initialization} from "./redux/app-reducer";
+import {initialization} from "./redux/appSlice";
 import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import {Header} from "./components/Header/Header";
+import {useAppDispatch, useAppSelector} from "./hooks/hooks";
+import {Profile} from "./components/Profile/Profile";
 
 
 function App() {
-    const initializationSuccess = useSelector<AppStateType, boolean>(state => state.app.initializationSuccess)
-    const dispatch = useDispatch()
+    const initializationSuccess = useAppSelector(state => state.app.initializationSuccess)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initialization())
@@ -28,12 +30,12 @@ function App() {
         return <Preloader/>
     } else {
         return <div className='app-wrapper'>
-            <HeaderContainer/>
+            <Header/>
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path="/" element={<Navigate replace to="/profile"/>}/>
-                    <Route path="/profile/*" element={<ProfileContainer/>}/>
+                    <Route path="/profile/*" element={<Profile/>}/>
                     <Route path="/dialogs" element={<Dialogs/>}/>
                     <Route path="/users" element={<UsersPage/>}/>
                     <Route path="/news" element={<News/>}/>

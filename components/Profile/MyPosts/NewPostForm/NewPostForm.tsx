@@ -1,8 +1,8 @@
 import React from "react";
 import {ErrorMessage, Form, Formik, Field} from "formik";
-import {useDispatch} from "react-redux";
-import {addPost} from "../../../../redux/profile-reducer";
+import {addPost} from "../../../../redux/profileSlice";
 import s from "./NewPostForm.module.css"
+import {useAppDispatch} from "../../../../hooks/hooks";
 
 
 const validate = (values: { newPostText: string }) => {
@@ -16,7 +16,7 @@ const validate = (values: { newPostText: string }) => {
 }
 
 export const NewPostForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     /*const formik = useFormik({
         initialValues: {
@@ -35,7 +35,6 @@ export const NewPostForm = () => {
             initialValues={{newPostText: ''}}
             validate={validate}
             onSubmit={values => {
-                console.log(values)
                 dispatch(addPost(values['newPostText']))
             }}
         >

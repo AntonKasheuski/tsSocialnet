@@ -2,13 +2,14 @@ import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {Preloader} from "../../../common/Preloader/Preloader";
 import defaultUserPhoto from "../../../../assets/images/default-user.png";
-import {ProfilePropsType} from "../../Profile";
-import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
+import {ProfileStatus} from "./ProfileStatus";
+import {useAppSelector} from "../../../../hooks/hooks";
 
-export function ProfileInfo(props: ProfilePropsType) {
-    if (!props.profile) {
-        return <Preloader />
-    }
+export function ProfileInfo() {
+    // if (!props.profile) {
+    //     return <Preloader />
+    // }
+    const profile = useAppSelector(state => state.profilePage.profile)
 
     return (
         <div>
@@ -16,50 +17,47 @@ export function ProfileInfo(props: ProfilePropsType) {
                 <img src={'https://www.nycgovparks.org/facilities/images/beaches/coney-island-beach-content.jpg'}/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large ? props.profile.photos.large : defaultUserPhoto} className={s.userPhoto}/>
+                <img src={profile.photos.large ? profile.photos.large : defaultUserPhoto} className={s.userPhoto}/>
                 <div className={s.userInfo}>
-                    <div className={s.fullName}>{props.profile.fullName}</div>
-                    <div className={s.aboutMe}>{props.profile.aboutMe}</div>
+                    <div className={s.fullName}>{profile.fullName}</div>
+                    <div className={s.aboutMe}>{profile.aboutMe}</div>
                     <hr/>
-                    {props.profile.lookingForAJob
-                        ? <div>Ищу работу: {props.profile.lookingForAJobDescription}</div>
+                    {profile.lookingForAJob
+                        ? <div>Ищу работу: {profile.lookingForAJobDescription}</div>
                         : <div>Работаю в поте лица</div>
                     }
                     <hr/>
-                    {props.profile.contacts.facebook
-                        ? <div>facebook: {props.profile.contacts.facebook}</div>
+                    {profile.contacts.facebook
+                        ? <div>facebook: {profile.contacts.facebook}</div>
                         : null
                     }
-                    {props.profile.contacts.website
-                        ? <div>website: {props.profile.contacts.website}</div>
+                    {profile.contacts.website
+                        ? <div>website: {profile.contacts.website}</div>
                         : null
                     }
-                    {props.profile.contacts.vk
-                        ? <div>vk: {props.profile.contacts.vk}</div>
+                    {profile.contacts.vk
+                        ? <div>vk: {profile.contacts.vk}</div>
                         : null
                     }
-                    {props.profile.contacts.twitter
-                        ? <div>twitter: {props.profile.contacts.twitter}</div>
+                    {profile.contacts.twitter
+                        ? <div>twitter: {profile.contacts.twitter}</div>
                         : null
                     }
-                    {props.profile.contacts.instagram
-                        ? <div>instagram: {props.profile.contacts.instagram}</div>
+                    {profile.contacts.instagram
+                        ? <div>instagram: {profile.contacts.instagram}</div>
                         : null
                     }
-                    {props.profile.contacts.youtube
-                        ? <div>youtube: {props.profile.contacts.youtube}</div>
+                    {profile.contacts.youtube
+                        ? <div>youtube: {profile.contacts.youtube}</div>
                         : null
                     }
-                    {props.profile.contacts.github
-                        ? <div>github: {props.profile.contacts.github}</div>
+                    {profile.contacts.github
+                        ? <div>github: {profile.contacts.github}</div>
                         : null
                     }
                 </div>
             </div>
-            <ProfileStatusWithHooks profile={props.profile}
-                           status={props.status}
-                           updateStatus={props.updateStatus}
-            />
+            <ProfileStatus/>
         </div>
     )
 }

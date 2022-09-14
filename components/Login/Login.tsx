@@ -1,10 +1,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import {useDispatch, useSelector} from "react-redux";
-import {logIn, setErrorMessage} from "../../redux/auth-reducer";
 import s from "./Login.module.css"
-import {AppStateType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
+import {logIn, setErrorMessage} from "../../redux/authSlice";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 type LoginValuesType = {
     login: string
@@ -33,9 +32,9 @@ const validate = (values: LoginValuesType) => {
 }
 
 const Login = () => {
-    const dispatch = useDispatch();
-    const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
-    const errorMessage = useSelector<AppStateType, string | null>(state => state.auth.errorMessage)
+    const dispatch = useAppDispatch();
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const errorMessage = useAppSelector(state => state.auth.errorMessage)
 
     const formik = useFormik({
         initialValues: {
@@ -45,7 +44,7 @@ const Login = () => {
         },
         validate,
         onSubmit: values => {
-            dispatch(logIn(values['login'], values['password'], values['checkbox']))
+            dispatch(logIn({email: values['login'], password: values['password'], rememberMe: values['checkbox']}))
         },
     });
 
@@ -56,7 +55,7 @@ const Login = () => {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={formik.handleSubmit} onChange={() => dispatch(setErrorMessage(null))}>
+            <form onSubmit={formik.handleSubmit} onChange={() => dispatch(setErrorMessage({errorMessage: null}))}>
                 <div>
                     <input
                         className={s.inputForm + " " + (formik.errors.login && formik.touched.login ? s.error : "")}

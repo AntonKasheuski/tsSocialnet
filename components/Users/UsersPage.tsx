@@ -1,20 +1,19 @@
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
-import {getStartPageUsers} from "../../redux/users-reducer";
+import {getStartPageUsers} from "../../redux/usersSlice";
 import React, {useEffect} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {Pagination} from "../../features/pagination/Pagination";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 
 export const UsersPage = () => {
-    const currentPage = useSelector<AppStateType, number>(state => state.usersPage.currentPage)
-    const pageSize = useSelector<AppStateType, number>(state => state.usersPage.pageSize)
-    const isFetching = useSelector<AppStateType, boolean>(state => state.usersPage.isFetching)
-    const dispatch = useDispatch()
+    const currentPage = useAppSelector(state => state.usersPage.currentPage)
+    const pageSize = useAppSelector(state => state.usersPage.pageSize)
+    const isFetching = useAppSelector(state => state.usersPage.isFetching)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(getStartPageUsers(currentPage, pageSize))
+        dispatch(getStartPageUsers({currentPage, pageSize}))
     }, [])
 
     return <>

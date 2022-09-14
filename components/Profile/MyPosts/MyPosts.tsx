@@ -1,13 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import {PostType} from '../../../redux/profile-reducer'
-import {MyPostsPropsType} from "./MyPostsContainer";
 import {NewPostForm} from "./NewPostForm/NewPostForm";
+import {useAppSelector} from "../../../hooks/hooks";
 
-export function MyPosts(props: MyPostsPropsType) {
-    let postsElements = props.posts.map((post: PostType) => <Post key={post.id} post={post.post}
-                                                                  likesCount={post.likesCount}/>);
+export function MyPosts() {
+    const posts = useAppSelector(state => state.profilePage.posts)
+
+    let postsElements = posts.map((post: PostType) => <Post key={post.id} post={post.post}
+                                                            likesCount={post.likesCount}/>);
 
     return (
         <div className={s.postsBlock}>
