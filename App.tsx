@@ -7,24 +7,21 @@ import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import {Routes, Route, Navigate} from 'react-router-dom';
 import {UsersPage} from "./components/Users/UsersPage";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import Login from "./components/Login/Login";
-import {useDispatch, useSelector} from "react-redux";
-import {initialization} from "./redux/appSlice";
-import {AppStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {Header} from "./components/Header/Header";
 import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import {Profile} from "./components/Profile/Profile";
+import {authorizationCheck} from "./redux/authSlice";
 
 
 function App() {
-    const initializationSuccess = useAppSelector(state => state.app.initializationSuccess)
+    const initializationSuccess = useAppSelector(state => state.auth.initializationSuccess)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(initialization())
-    }, [])
+        dispatch(authorizationCheck())
+    }, [dispatch])
 
     if (!initializationSuccess) {
         return <Preloader/>

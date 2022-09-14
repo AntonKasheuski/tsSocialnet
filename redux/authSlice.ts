@@ -57,6 +57,7 @@ export type AuthType = {
     isFetching: boolean
     isAuth: boolean
     errorMessage: string | null
+    initializationSuccess: boolean
 }
 const initialState: AuthType = {
     userId: NaN,
@@ -64,7 +65,8 @@ const initialState: AuthType = {
     login: "",
     isFetching: false,
     isAuth: false,
-    errorMessage: null
+    errorMessage: null,
+    initializationSuccess: false,
 }
 
 export const authSlice = createSlice({
@@ -100,6 +102,7 @@ export const authSlice = createSlice({
                 if (action.payload.resultCode === 1) {
                     state.errorMessage = action.payload.messages[0]
                 }
+                state.initializationSuccess = true
             })
             .addCase(logIn.pending, (state) => {
                 state.isFetching = true

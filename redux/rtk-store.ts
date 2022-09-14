@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from "./authSlice";
-import appReducer from "./appSlice";
 import dialogsReducer from "./dialogsSllice";
 import profileReducer from "./profileSlice";
 import usersReducer from "./usersSlice";
@@ -8,7 +7,6 @@ import usersReducer from "./usersSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        app: appReducer,
         messagesPage: dialogsReducer,
         profilePage: profileReducer,
         usersPage: usersReducer,

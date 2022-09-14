@@ -34,8 +34,9 @@ export const NewPostForm = () => {
         <Formik
             initialValues={{newPostText: ''}}
             validate={validate}
-            onSubmit={values => {
+            onSubmit={(values, {resetForm}) => {
                 dispatch(addPost(values['newPostText']))
+                resetForm()
             }}
         >
             <Form>

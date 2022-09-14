@@ -22,8 +22,9 @@ export const NewMessageForm = () => {
         <Formik
             initialValues={{newMessageText: ''}}
             validate={validate}
-            onSubmit={values => {
+            onSubmit={(values, {resetForm}) => {
                 dispatch(addMessage(values['newMessageText']))
+                resetForm()
             }}
         >
             <Form>

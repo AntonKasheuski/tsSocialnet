@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {PostType} from '../../../redux/profile-reducer'
+import {PostType} from '../../../redux/profileSlice'
 import {NewPostForm} from "./NewPostForm/NewPostForm";
 import {useAppSelector} from "../../../hooks/hooks";
 

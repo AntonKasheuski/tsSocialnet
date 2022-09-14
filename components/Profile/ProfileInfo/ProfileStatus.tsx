@@ -1,9 +1,10 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {useAppSelector} from "../../../../hooks/hooks";
-import {updateStatus} from "../../../../redux/profileSlice";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {updateStatus} from "../../../redux/profileSlice";
 
 export const ProfileStatus = () => {
     const status = useAppSelector(state => state.profilePage.status)
+    const dispatch = useAppDispatch()
 
     const [editMode, setEditMode] = useState(false)
     const [newStatus, setNewStatus] = useState(status)
@@ -17,7 +18,7 @@ export const ProfileStatus = () => {
     }
     const deactivateEditMode = () => {
         setEditMode(false)
-        updateStatus(newStatus);
+        dispatch(updateStatus(newStatus))
     }
     const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNewStatus(e.currentTarget.value)
@@ -28,7 +29,7 @@ export const ProfileStatus = () => {
             {editMode
                 ? <div>
                     <input
-                        value={status}
+                        value={newStatus}
                         autoFocus={true}
                         onBlur={deactivateEditMode}
                         onChange={onStatusChange}

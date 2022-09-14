@@ -1,16 +1,13 @@
-import React, {useEffect} from 'react';
-import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
+import React from 'react';
+import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {useAppSelector} from "../../hooks/hooks";
-import {getStatus, setCurrentUser} from "../../redux/profileSlice";
 import {MyPosts} from "./MyPosts/MyPosts";
+import {Navigate} from "react-router-dom";
 
 export function Profile() {
-    const userId = useAppSelector(state => state.auth.userId)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
 
-    useEffect(() => {
-        setCurrentUser(userId)
-        getStatus(userId)
-    }, [])
+    if (!isAuth) return <Navigate replace to="/login"/>
 
     return (
         <div>

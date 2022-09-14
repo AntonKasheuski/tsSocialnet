@@ -17,16 +17,14 @@ export const getStatus = createAsyncThunk(
 )
 
 type updateStatusReturnType = {
-    data: {status: string},
+    data: {},
     resultCode: number,
     messages: string[],
 }
 export const updateStatus = createAsyncThunk(
     'profile/updateStatus',
     async (status: string) => {
-        let res = await profileAPI.updateStatus(status) as updateStatusReturnType
-        res.data.status = status
-        return res
+        return await profileAPI.updateStatus(status) as updateStatusReturnType
     }
 )
 
@@ -101,7 +99,7 @@ export const profileSlice = createSlice({
     reducers: {
         addPost: (state, action: PayloadAction<string>) => {
             const newPost: PostType = {
-                id: 4,
+                id: state.posts.length + 1,
                 post: action.payload,
                 likesCount: 0
             }
@@ -117,14 +115,14 @@ export const profileSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(setCurrentUser.fulfilled, (state, action) => {
-                setUserProfile(action.payload)
+                state.profile = action.payload
             })
             .addCase(getStatus.fulfilled, (state, action) => {
-                setStatus(action.payload)
+                state.status = action.payload
             })
             .addCase(updateStatus.fulfilled, (state, action) => {
                 if (action.payload.resultCode === 0) {
-                    setStatus(action.payload.data.status)
+                    state.status = action.meta.arg
                 }
             })
     }
