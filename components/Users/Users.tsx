@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./Users.module.css"
 import defaultUserPhoto from "../../assets/images/default-user.png"
-import {followUser, unfollowUser} from "../../redux/usersSlice";
+import {toggleFollowUser} from "../../redux/usersSlice";
 import {NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
@@ -10,11 +10,8 @@ export const Users = () => {
     const followingInProgressArray = useAppSelector(state => state.usersPage.followingInProgressArray)
     const dispatch = useAppDispatch()
 
-    const followUserHandler = (userId: number) => {
-        dispatch(followUser(userId))
-    }
-    const unfollowUserHandler = (userId: number) => {
-        dispatch(unfollowUser(userId))
+    const toggleFollowUserHandler = (userId: number) => {
+        dispatch(toggleFollowUser(userId))
     }
 
     return <div>
@@ -27,11 +24,11 @@ export const Users = () => {
                     {u.followed
                         ? <button disabled={followingInProgressArray.some(id => id === u.id)}
                                   onClick={() => {
-                                      unfollowUserHandler(u.id)
+                                      toggleFollowUserHandler(u.id)
                                   }}>Unfollow</button>
                         : <button disabled={followingInProgressArray.some(id => id === u.id)}
                                   onClick={() => {
-                                      followUserHandler(u.id)
+                                      toggleFollowUserHandler(u.id)
                                   }}>Follow</button>}
                 </div>
                 <div className={s.userBlock}>

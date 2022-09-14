@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import s from "../../components/Users/Users.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../redux/redux-store";
-import {getSelectedPageUsers} from "../../redux/users-reducer";
+import {useDispatch} from "react-redux";
+import {getPageUsers} from "../../redux/usersSlice";
+import {useAppSelector} from "../../hooks/hooks";
 
 export const Pagination = ({portionSize = 10}) => {
-    const totalUsersCount = useSelector<AppStateType, number>(state => state.usersPage.totalUsersCount)
-    const pageSize = useSelector<AppStateType, number>(state => state.usersPage.pageSize)
-    const currentPage = useSelector<AppStateType, number>(state => state.usersPage.currentPage)
+    const totalUsersCount = useAppSelector(state => state.usersPage.totalUsersCount)
+    const pageSize = useAppSelector(state => state.usersPage.pageSize)
+    const currentPage = useAppSelector(state => state.usersPage.currentPage)
     const dispatch = useDispatch()
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize)
@@ -17,14 +17,13 @@ export const Pagination = ({portionSize = 10}) => {
         pages.push(i)
     }
 
-
     let portionCount = Math.ceil(pagesCount / portionSize)
     let [portionNumber, setPortionNumber] = useState(1)
     let pagePortionLeftBorder = (portionNumber - 1) * portionSize + 1
     let pagePortionRightBorder = portionNumber * portionSize
 
     const onPageChanged = (pageNumber: number) => {
-        dispatch(getSelectedPageUsers(pageNumber, pageSize))
+        dispatch(getPageUsers({pageNumber, pageSize}))
     }
 
     return (

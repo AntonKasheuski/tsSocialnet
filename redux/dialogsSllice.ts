@@ -9,9 +9,9 @@ export type MessageType = {
     message: string
 }
 export type MessagesPageType = {
-    dialogs: Array<DialogType>,
+    dialogs: DialogType[],
     newMessageText: string,
-    messages: Array<MessageType>
+    messages: MessageType[]
 }
 
 const initialState: MessagesPageType = {

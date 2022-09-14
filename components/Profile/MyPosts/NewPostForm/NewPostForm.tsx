@@ -18,18 +18,6 @@ const validate = (values: { newPostText: string }) => {
 export const NewPostForm = () => {
     const dispatch = useAppDispatch()
 
-    /*const formik = useFormik({
-        initialValues: {
-            newPostText: ''
-        },
-        validate,
-        onSubmit: values => {
-            console.log(values)
-            dispatch(addPost(values['newPostText']))
-            formik.resetForm()
-        },
-    });*/
-
     return (
         <Formik
             initialValues={{newPostText: ''}}
@@ -50,21 +38,6 @@ export const NewPostForm = () => {
                     <button type={'submit'}>Add post</button>
                 </div>
             </Form>
-            {/*{formik => (
-                <form onSubmit={formik.handleSubmit}>
-                    <div>
-                    <textarea
-                        className={s.textareaForm + " " + (formik.errors.newPostText ? s.error : "")}
-                        placeholder={"Enter your text"}
-                        {...formik.getFieldProps('newPostText')}
-                    />
-                    </div>
-                    {formik.errors.newPostText && <div className={s.errorText}>{formik.errors.newPostText}</div>}
-                    <div>
-                        <button type={'submit'}>Add post</button>
-                    </div>
-                </form>
-            )}*/}
         </Formik>
     )
 }

@@ -1,9 +1,10 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {usersAPI} from "../api/api";
+import {RootState} from "./rtk-store";
 
 
-type GetStartPageUsersInputType = {
-    currentPage: number,
+type GetSelectedPageUsersInputType = {
+    pageNumber: number,
     pageSize: number,
 }
 type GetPageUsersReturnType = {
@@ -11,18 +12,7 @@ type GetPageUsersReturnType = {
     totalCount: number,
     error: string,
 }
-export const getStartPageUsers = createAsyncThunk(
-    'users/getStartPageUsers',
-    async ({currentPage, pageSize}: GetStartPageUsersInputType) => {
-        return await usersAPI.getUsers(currentPage, pageSize) as GetPageUsersReturnType
-    }
-)
-
-type GetSelectedPageUsersInputType = {
-    pageNumber: number,
-    pageSize: number,
-}
-export const getSelectedPageUsers = createAsyncThunk(
+export const getPageUsers = createAsyncThunk(
     'users/getSelectedPageUsers',
     async ({pageNumber, pageSize}: GetSelectedPageUsersInputType) => {
         return await usersAPI.getUsers(pageNumber, pageSize) as GetPageUsersReturnType
@@ -34,19 +24,20 @@ type FollowUserReturnType = {
     messages: string[],
     data: {},
 }
-export const followUser = createAsyncThunk(
+export const toggleFollowUser = createAsyncThunk(
     'profile/followUser',
-    async (userId: number) => {
-        return await usersAPI.followUser(userId) as FollowUserReturnType
+    async (userId: number, thunkAPI) => {
+        let state = thunkAPI.getState() as RootState
+        let user = state.usersPage.users.find(u => u.id === userId)
+        if (user && user.followed) {
+            return await usersAPI.unfollowUser(userId) as FollowUserReturnType
+        } else {
+            return await usersAPI.followUser(userId) as FollowUserReturnType
+        }
+
     }
 )
 
-export const unfollowUser = createAsyncThunk(
-    'profile/unfollowUser',
-    async (userId: number) => {
-        return await usersAPI.unfollowUser(userId) as FollowUserReturnType
-    }
-)
 
 export type LocationType = {
     country: string
@@ -112,39 +103,22 @@ export const usersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getStartPageUsers.pending, (state) => {
+            .addCase(getPageUsers.pending, (state) => {
                 state.isFetching = true
             })
-            .addCase(getStartPageUsers.fulfilled, (state, action) => {
+            .addCase(getPageUsers.fulfilled, (state, action) => {
                 state.isFetching = false
                 state.users = action.payload.items
                 state.totalUsersCount = action.payload.totalCount
+                state.currentPage = action.meta.arg.pageNumber
             })
-            .addCase(getSelectedPageUsers.pending, (state) => {
-                state.isFetching = true
-            })
-            .addCase(getSelectedPageUsers.fulfilled, (state, action) => {
-                state.isFetching = false
-                state.users = action.payload.items
-            })
-            .addCase(followUser.pending, (state, {meta}) => {
+            .addCase(toggleFollowUser.pending, (state, {meta}) => {
                 state.followingInProgressArray.push(meta.arg)
             })
-            .addCase(followUser.fulfilled, (state, action) => {
-                state.followingInProgressArray.filter(id => id !== action.meta.arg)
+            .addCase(toggleFollowUser.fulfilled, (state, action) => {
+                state.followingInProgressArray = state.followingInProgressArray.filter(id => id !== action.meta.arg)
                 if (action.payload.resultCode === 0) {
-                    state.users.map(u => u.id === action.meta.arg ? u.followed = true : u)
-                } else {
-                    alert(action.payload.messages[0])
-                }
-            })
-            .addCase(unfollowUser.pending, (state, {meta}) => {
-                state.followingInProgressArray.push(meta.arg)
-            })
-            .addCase(unfollowUser.fulfilled, (state, action) => {
-                state.followingInProgressArray.filter(id => id !== action.meta.arg)
-                if (action.payload.resultCode === 0) {
-                    state.users.map(u => u.id === action.meta.arg ? u.followed = false : u)
+                    state.users.map(u => u.id === action.meta.arg ? u.followed = !u.followed : u)
                 } else {
                     alert(action.payload.messages[0])
                 }
