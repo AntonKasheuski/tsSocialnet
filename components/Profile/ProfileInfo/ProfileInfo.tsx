@@ -1,20 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {Preloader} from "../../common/Preloader/Preloader";
 import defaultUserPhoto from "../../../assets/images/default-user.png";
 import {ProfileStatus} from "./ProfileStatus";
-import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
-import {getStatus, setCurrentUser} from "../../../redux/profileSlice";
+import {useAppSelector} from "../../../hooks/hooks";
 
 export function ProfileInfo() {
-    const userId = useAppSelector(state => state.auth.userId)
     const profile = useAppSelector(state => state.profilePage.profile)
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        dispatch(setCurrentUser(userId))
-        dispatch(getStatus(userId))
-    }, [dispatch, userId])
 
     if (!profile.fullName) {
         return <Preloader />

@@ -13,15 +13,22 @@ import {Header} from "./components/Header/Header";
 import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import {Profile} from "./components/Profile/Profile";
 import {authorizationCheck} from "./redux/authSlice";
+import {getStatus, setCurrentUser} from "./redux/profileSlice";
 
 
 function App() {
+    const userId = useAppSelector(state => state.auth.userId)
     const initializationSuccess = useAppSelector(state => state.auth.initializationSuccess)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(authorizationCheck())
     }, [dispatch])
+
+    useEffect(() => {
+        dispatch(setCurrentUser(userId))
+        dispatch(getStatus(userId))
+    }, [dispatch, userId])
 
     if (!initializationSuccess) {
         return <Preloader/>

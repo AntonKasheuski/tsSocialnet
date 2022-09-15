@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink, useLocation} from 'react-router-dom';
+import ProfileCard from "./ProfileCard/ProfileCard";
 
 export function Navbar() {
     const location = useLocation()
@@ -16,6 +17,7 @@ export function Navbar() {
 
     return (
         <nav className={s.nav}>
+            <ProfileCard />
             {
                 navArray.map(el => {
                     return <NavLink key={el.name} to={el.link}

@@ -1,0 +1,26 @@
+.main {
+    min-width: 220px;
+    height: 60px;
+    background-color: whitesmoke;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+}
+
+.userPhoto {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.textBlock {
+    margin-left: 15px;
+}
+
+.status {
+    color: #757575;
+    font-size: smaller;
+}
