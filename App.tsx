@@ -41,7 +41,7 @@ function App() {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path="/" element={<Navigate replace to="/profile"/>}/>
+                    <Route path="/" element={<Navigate replace to={'/profile/' + userId}/>}/>
                     <Route path="/posts" element={<Posts/>}/>
                     <Route path="/profile/*" element={<Profile/>}/>
                     <Route path="/dialogs" element={<Dialogs/>}/>
