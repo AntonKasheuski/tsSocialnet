@@ -1,0 +1,43 @@
+.item {
+    margin-top: 15px;
+    padding: 20px 20px 5px 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);;
+}
+
+.userInfo {
+    display: flex;
+}
+
+.item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.nameAndDate {
+    margin-left: 15px;
+}
+
+.postDate {
+    color: #757575;
+    font-size: smaller;
+}
+
+.postText {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.postStatistics {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #e1e1e1;
+    padding: 10px 0;
+}
+
+.addComment {
+    border-top: 1px solid #e1e1e1;
+    margin: 0 -20px;
+}

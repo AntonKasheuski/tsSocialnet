@@ -29,7 +29,11 @@ export const updateStatus = createAsyncThunk(
 export type PostType = {
     id: number
     post: string
+    date: string
+    commentsCount: number
     likesCount: number
+    shareCount: number
+    savedCount: number
 }
 type ContactsType = {
     facebook: string
@@ -62,9 +66,33 @@ export type ProfilePageType = {
 
 const initialState: ProfilePageType = {
     posts: [
-        {id: 1, post: "Hi, how are you?", likesCount: 15},
-        {id: 2, post: "It's my first post", likesCount: 20},
-        {id: 3, post: "Bla-bla", likesCount: 30}
+        {
+            id: 1,
+            post: "Hi, how are you?",
+            date: "16/07/2022, 11:37",
+            commentsCount: 15,
+            likesCount: 15,
+            shareCount: 2,
+            savedCount: 5
+        },
+        {
+            id: 2,
+            post: "It's my first post",
+            date: "18/07/2022, 08:20",
+            commentsCount: 12,
+            likesCount: 20,
+            shareCount: 1,
+            savedCount: 0
+        },
+        {
+            id: 3,
+            post: "Bla-bla",
+            date: "28/08/2022, 19:51",
+            commentsCount: 3,
+            likesCount: 30,
+            shareCount: 5,
+            savedCount: 8
+        }
     ],
     profile: {
         aboutMe: "",
@@ -94,11 +122,15 @@ export const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
-        addPost: (state, action: PayloadAction<string>) => {
+        addPost: (state, action: PayloadAction<{ inputValue: string, date: string }>) => {
             const newPost: PostType = {
                 id: state.posts.length + 1,
-                post: action.payload,
-                likesCount: 0
+                post: action.payload.inputValue,
+                date: action.payload.date,
+                commentsCount: 0,
+                likesCount: 0,
+                shareCount: 0,
+                savedCount: 0,
             }
             state.posts.push(newPost)
         }

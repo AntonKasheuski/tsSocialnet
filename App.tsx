@@ -14,6 +14,7 @@ import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import {Profile} from "./components/Profile/Profile";
 import {authorizationCheck} from "./redux/authSlice";
 import {getStatus, setCurrentUser} from "./redux/profileSlice";
+import {Posts} from "./components/Posts/Posts";
 
 
 function App() {
@@ -26,8 +27,10 @@ function App() {
     }, [dispatch])
 
     useEffect(() => {
-        dispatch(setCurrentUser(userId))
-        dispatch(getStatus(userId))
+        if (!isNaN(userId)) {
+            dispatch(setCurrentUser(userId))
+            dispatch(getStatus(userId))
+        }
     }, [dispatch, userId])
 
     if (!initializationSuccess) {
@@ -39,6 +42,7 @@ function App() {
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path="/" element={<Navigate replace to="/profile"/>}/>
+                    <Route path="/posts" element={<Posts/>}/>
                     <Route path="/profile/*" element={<Profile/>}/>
                     <Route path="/dialogs" element={<Dialogs/>}/>
                     <Route path="/users" element={<UsersPage/>}/>

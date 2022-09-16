@@ -9,7 +9,6 @@ import logo from "../../assets/images/site-logo.png";
 export function Header() {
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const isFetching = useAppSelector(state => state.auth.isFetching)
-    const login = useAppSelector(state => state.auth.login)
     const dispatch = useAppDispatch()
 
     const logOutHandler = () => {
@@ -29,7 +28,6 @@ export function Header() {
                         {isFetching
                             ? <Preloader/>
                             : <>
-                                <div>{login}</div>
                                 <button onClick={logOutHandler}>Logout</button>
                             </>
                         }

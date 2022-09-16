@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import s from "./Login.module.css"
 import {Navigate} from "react-router-dom";
 import {logIn, setErrorMessage} from "../../redux/authSlice";
@@ -27,14 +27,17 @@ const validate = (values: LoginValuesType) => {
     } else if (values.password.length > 20) {
         errors.password = 'Must be 20 characters or less';
     }
-    console.log(errors)
     return errors
 }
 
 const Login = () => {
-    const dispatch = useAppDispatch();
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const errorMessage = useAppSelector(state => state.auth.errorMessage)
+    const dispatch = useAppDispatch();
+
+    const onChangeFormHandler = () => {
+        !errorMessage && dispatch(setErrorMessage({errorMessage: null}))
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -55,7 +58,7 @@ const Login = () => {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={formik.handleSubmit} onChange={() => dispatch(setErrorMessage({errorMessage: null}))}>
+            <form onSubmit={formik.handleSubmit} onChange={onChangeFormHandler}>
                 <div>
                     <input
                         className={s.inputForm + " " + (formik.errors.login && formik.touched.login ? s.error : "")}
