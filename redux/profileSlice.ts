@@ -7,8 +7,8 @@ type ThunkReturnType<T = {}> = {
     messages: string[],
 }
 
-export const setCurrentUser = createAsyncThunk(
-    'profile/setCurrentUser',
+export const setUser = createAsyncThunk(
+    'profile/setUser',
     async (userId: number) => {
         return await profileAPI.getCurrentUser(userId) as ProfileType
     }
@@ -58,10 +58,18 @@ export type ProfileType = {
     userId: number
     photos: ProfilePhotosType
 }
+export type CurrentProfileType = {
+    fullName: string
+    userId: number
+    photo: string
+    status: string
+}
 export type ProfilePageType = {
     posts: Array<PostType>
     profile: ProfileType
+    currentProfile: CurrentProfileType
     status: string
+    isDataLoaded: boolean
 }
 
 const initialState: ProfilePageType = {
@@ -115,7 +123,14 @@ const initialState: ProfilePageType = {
             large: "",
         },
     },
+    currentProfile: {
+        fullName: "",
+        userId: NaN,
+        photo: "",
+        status: "",
+    },
     status: "",
+    isDataLoaded: false
 }
 
 export const profileSlice = createSlice({
@@ -133,24 +148,32 @@ export const profileSlice = createSlice({
                 savedCount: 0,
             }
             state.posts.push(newPost)
+        },
+        setCurrentProfile: (state) => {
+            state.currentProfile.fullName = state.profile.fullName
+            state.currentProfile.userId = state.profile.userId
+            state.currentProfile.photo = state.profile.photos.large
+            state.currentProfile.status = state.status
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(setCurrentUser.fulfilled, (state, action) => {
+            .addCase(setUser.fulfilled, (state, action) => {
                 state.profile = action.payload
             })
             .addCase(getStatus.fulfilled, (state, action) => {
                 state.status = action.payload
+                state.isDataLoaded = true
             })
             .addCase(updateStatus.fulfilled, (state, action) => {
                 if (action.payload.resultCode === 0) {
                     state.status = action.meta.arg
+                    state.currentProfile.status = action.meta.arg
                 }
             })
     }
 })
 
-export const {addPost} = profileSlice.actions
+export const {addPost, setCurrentProfile} = profileSlice.actions
 
 export default profileSlice.reducer

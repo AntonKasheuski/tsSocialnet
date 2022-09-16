@@ -6,10 +6,10 @@ import {useAppSelector} from "../../hooks/hooks";
 
 export function Navbar() {
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    const userId = useAppSelector(state => state.profilePage.profile.userId)
+    const currentUserId = useAppSelector(state => state.profilePage.currentProfile.userId)
 
     const location = useLocation()
-    const pathname = location.pathname
+    const pathname = location.pathname.slice(1)
     const num = pathname.indexOf('/', 1)
     let slicedPathname: string
     if (num !== -1) {
@@ -17,25 +17,28 @@ export function Navbar() {
     }
 
     let navArray = [
-        {link: '/posts', name: 'Posts'},
-        {link: '/profile/' + userId, name: 'Profile'},
-        {link: '/dialogs', name: 'Messages'},
-        {link: '/users', name: 'Users'},
-        {link: '/news', name: 'News'},
-        {link: '/music', name: 'Music'},
-        {link: '/settings', name: 'Settings'},
+        {page: 'posts', link: '/posts', name: 'Posts'},
+        {page: 'profile', link: '/profile/' + currentUserId, name: 'Profile'},
+        {page: 'dialogs', link: '/dialogs', name: 'Messages'},
+        {page: 'users', link: '/users', name: 'Users'},
+        {page: 'news', link: '/news', name: 'News'},
+        {page: 'music', link: '/music', name: 'Music'},
+        {page: 'settings', link: '/settings', name: 'Settings'},
     ]
 
     return (
         <nav className={s.nav}>
-            {isAuth && <ProfileCard/>}
+            {isAuth &&
+                <NavLink to={'/profile/' + currentUserId}>
+                    <ProfileCard/>
+                </NavLink>}
             {
                 navArray.map(el => {
                     return <NavLink key={el.name} to={el.link}
-                                    className={(slicedPathname || pathname) === el.link ? s.activeLink : s.item}>
-                        {(slicedPathname || pathname) === el.link && <div className={s.activeLabel}></div>}
+                                    className={(slicedPathname || pathname) === el.page ? s.activeLink : s.item}>
+                        {(slicedPathname || pathname) === el.page && <div className={s.activeLabel}></div>}
                         <div
-                            className={(slicedPathname || pathname) === el.link ? s.activeText : s.text}>{el.name}</div>
+                            className={(slicedPathname || pathname) === el.page ? s.activeText : s.text}>{el.name}</div>
                     </NavLink>
                 })
             }

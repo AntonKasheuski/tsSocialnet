@@ -13,7 +13,7 @@ import {Header} from "./components/Header/Header";
 import {useAppDispatch, useAppSelector} from "./hooks/hooks";
 import {Profile} from "./components/Profile/Profile";
 import {authorizationCheck} from "./redux/authSlice";
-import {getStatus, setCurrentUser} from "./redux/profileSlice";
+import {getStatus, setUser} from "./redux/profileSlice";
 import {Posts} from "./components/Posts/Posts";
 
 
@@ -28,7 +28,7 @@ function App() {
 
     useEffect(() => {
         if (!isNaN(userId)) {
-            dispatch(setCurrentUser(userId))
+            dispatch(setUser(userId))
             dispatch(getStatus(userId))
         }
     }, [dispatch, userId])
