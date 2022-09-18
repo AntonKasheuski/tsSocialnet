@@ -10,8 +10,8 @@ type PropsType = {
 }
 
 export const Post = ({post}: PropsType) => {
-    const userPhoto = useAppSelector(state => state.profilePage.profile.photos.large)
-    const userName = useAppSelector(state => state.profilePage.profile.fullName)
+    const userPhoto = useAppSelector(state => state.profilePage.currentProfile.photo)
+    const userName = useAppSelector(state => state.profilePage.currentProfile.fullName)
 
     return (
         <div className={s.item}>

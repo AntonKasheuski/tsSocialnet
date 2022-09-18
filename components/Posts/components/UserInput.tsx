@@ -10,7 +10,7 @@ type PropsType = {
 }
 
 export const UserInput = ({placeholder, buttonText, onClickCallback}: PropsType) => {
-    let userPhoto = useAppSelector(state => state.profilePage.profile.photos.large)
+    let userPhoto = useAppSelector(state => state.profilePage.currentProfile.photo)
 
     const [inputValue, setInputValue] = useState('')
 

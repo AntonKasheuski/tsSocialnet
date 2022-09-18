@@ -25,6 +25,12 @@ export const updateStatus = createAsyncThunk(
         return await profileAPI.updateStatus(status) as ThunkReturnType
     }
 )
+export const updatePhoto = createAsyncThunk(
+    'profile/updatePhoto',
+    async (photo: File) => {
+        return await profileAPI.updateProfilePhoto(photo) as ThunkReturnType<{photos: {small: string, large: string}}>
+    }
+)
 
 export type PostType = {
     id: number
@@ -170,6 +176,14 @@ export const profileSlice = createSlice({
                     state.status = action.meta.arg
                     state.currentProfile.status = action.meta.arg
                 }
+            })
+            .addCase(updatePhoto.fulfilled, (state, action) => {
+                if (action.payload.resultCode === 0) {
+                    console.log(action)
+                    state.profile.photos.large = action.payload.data.photos.large
+                    state.currentProfile.photo = action.payload.data.photos.large
+                }
+                console.log(state)
             })
     }
 })

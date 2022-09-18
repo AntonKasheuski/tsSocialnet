@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 import {Navigate, useLocation} from "react-router-dom";
 import {ProfileStatus} from "./ProfileInfo/ProfileStatus";
 import {getStatus, setUser} from "../../redux/profileSlice";
+import {ImageUploader} from "../../features/imageUploader/ImageUploader";
 
 export function Profile() {
     const isAuth = useAppSelector(state => state.auth.isAuth)
@@ -15,10 +16,8 @@ export function Profile() {
     const userId = pathname.slice(num + 1)
 
     useEffect(() => {
-
             dispatch(setUser(+userId))
             dispatch(getStatus(+userId))
-
     }, [dispatch, userId])
 
     if (!isAuth) return <Navigate replace to="/login"/>
@@ -27,6 +26,7 @@ export function Profile() {
         <div>
             <ProfileInfo/>
             <ProfileStatus/>
+            <ImageUploader/>
         </div>
     )
 }
