@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import s from "./UserInput.module.css";
 import defaultUserPhoto from "../../../assets/images/default-user.png";
-import {useAppSelector} from "../../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/reduxToolkitHooks";
 
 type PropsType = {
     placeholder: string

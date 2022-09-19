@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../hooks/reduxToolkitHooks";
 import {updateStatus} from "../../../redux/profileSlice";
 
 export const ProfileStatus = ({userId}: {userId: string}) => {

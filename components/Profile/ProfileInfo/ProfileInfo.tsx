@@ -2,7 +2,7 @@ import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {Preloader} from "../../common/Preloader/Preloader";
 import defaultUserPhoto from "../../../assets/images/default-user.png";
-import {useAppSelector} from "../../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/reduxToolkitHooks";
 
 export function ProfileInfo() {
     const profile = useAppSelector(state => state.profilePage.profile)

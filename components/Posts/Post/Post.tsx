@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./Post.module.css";
 import {UserInput} from "../components/UserInput";
-import {useAppSelector} from "../../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/reduxToolkitHooks";
 import defaultUserPhoto from "../../../assets/images/default-user.png";
 import {PostType} from "../../../redux/profileSlice";
 

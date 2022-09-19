@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink, useLocation} from 'react-router-dom';
 import ProfileCard from "./ProfileCard/ProfileCard";
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/reduxToolkitHooks";
 
 export function Navbar() {
     const isAuth = useAppSelector(state => state.auth.isAuth)

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxToolkitHooks";
 import {Navigate, useLocation} from "react-router-dom";
 import {ProfileStatus} from "./ProfileInfo/ProfileStatus";
 import {getStatus, setUser} from "../../redux/profileSlice";

@@ -25,14 +25,49 @@
     margin-right: 10px;
 }
 
-.input {
+.inputBlock {
     width: 400px;
+    position: relative;
+}
+
+.input {
+    width: 380px;
     height: 30px;
     background-color: whitesmoke;
     border: 1px solid #e1e1e1;
     border-radius: 10px;
-    padding-left: 10px;
+    padding-left: 20px;
 }
 .input:focus {
     outline: none;
+}
+
+.dropDown {
+    list-style: none;
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    padding-left: 0;
+    overflow: scroll;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #e1e1e1;
+}
+.loading {
+    text-align: center;
+    padding: 5px 0;
+}
+.li {
+    padding: 5px 20px;
+    color: black;
+}
+.li:hover {
+    background-color: #a6a6a6;
+    color: white;
+    transition: color;
+    cursor: pointer;
+    border-radius: 10px;
+}
+a {
+    text-decoration: none;
 }

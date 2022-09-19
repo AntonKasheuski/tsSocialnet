@@ -3,7 +3,7 @@ import s from "./Users.module.css"
 import defaultUserPhoto from "../../assets/images/default-user.png"
 import {toggleFollowUser} from "../../redux/usersSlice";
 import {NavLink} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxToolkitHooks";
 
 export const Users = () => {
     const users = useAppSelector(state => state.usersPage.users)
@@ -19,7 +19,7 @@ export const Users = () => {
             <div key={u.id} className={s.userItem}>
                 <div className={s.avatarAndButton}>
                     <NavLink to={'/profile/' + u.id}>
-                        <img src={u.photos.small ? u.photos.small : defaultUserPhoto} className={s.userPhoto}/>
+                        <img src={u.photos.small ? u.photos.small : defaultUserPhoto} alt={'user'} className={s.userPhoto}/>
                     </NavLink>
                     {u.followed
                         ? <button disabled={followingInProgressArray.some(id => id === u.id)}
@@ -35,10 +35,6 @@ export const Users = () => {
                     <div className={s.userNameAndStatus}>
                         <div>{u.name}</div>
                         <div style={{opacity: 0.5}}>{u.status}</div>
-                    </div>
-                    <div className={s.userLocation}>
-                        <div>{"u.location.country"}</div>
-                        <div>{"u.location.city"}</div>
                     </div>
                 </div>
             </div>

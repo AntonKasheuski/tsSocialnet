@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import s from './ProfileCard.module.css'
-import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../../hooks/reduxToolkitHooks";
 import defaultUserPhoto from "../../../assets/images/default-user.png";
 import {setCurrentProfile} from "../../../redux/profileSlice";
 

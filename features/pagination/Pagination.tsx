@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import s from "../../components/Users/Users.module.css";
 import {useDispatch} from "react-redux";
 import {getPageUsers} from "../../redux/usersSlice";
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/reduxToolkitHooks";
 
-export const Pagination = ({portionSize = 10}) => {
+export const Pagination = ({showFollowedUsers}: {showFollowedUsers: boolean}) => {
+    const portionSize = 10
     const totalUsersCount = useAppSelector(state => state.usersPage.totalUsersCount)
     const pageSize = useAppSelector(state => state.usersPage.pageSize)
     const currentPage = useAppSelector(state => state.usersPage.currentPage)
@@ -23,7 +24,7 @@ export const Pagination = ({portionSize = 10}) => {
     let pagePortionRightBorder = portionNumber * portionSize
 
     const onPageChanged = (pageNumber: number) => {
-        dispatch(getPageUsers({pageNumber, pageSize}))
+        dispatch(getPageUsers({pageNumber, pageSize, showFollowedUsers}))
     }
 
     return (

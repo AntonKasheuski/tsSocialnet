@@ -3,7 +3,7 @@ import s from './Dialogs.module.css';
 import {Navigate} from "react-router-dom";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {useAppSelector} from "../../hooks/hooks";
+import {useAppSelector} from "../../hooks/reduxToolkitHooks";
 
 export const Dialogs = () => {
     const isAuth = useAppSelector(state => state.auth.isAuth)

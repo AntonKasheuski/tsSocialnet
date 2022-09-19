@@ -10,7 +10,7 @@ import {UsersPage} from "./components/Users/UsersPage";
 import Login from "./components/Login/Login";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {Header} from "./components/Header/Header";
-import {useAppDispatch, useAppSelector} from "./hooks/hooks";
+import {useAppDispatch, useAppSelector} from "./hooks/reduxToolkitHooks";
 import {Profile} from "./components/Profile/Profile";
 import {authorizationCheck} from "./redux/authSlice";
 import {getStatus, setUser} from "./redux/profileSlice";

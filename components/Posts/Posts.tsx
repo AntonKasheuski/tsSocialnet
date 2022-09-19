@@ -2,7 +2,7 @@ import React from 'react';
 import s from "./Posts.module.css";
 import {Post} from "./Post/Post";
 import {addPost, PostType} from '../../redux/profileSlice'
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxToolkitHooks";
 import {Navigate} from "react-router-dom";
 import {UserInput} from "./components/UserInput";
 

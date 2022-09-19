@@ -3,7 +3,7 @@ import {useFormik} from 'formik';
 import s from "./Login.module.css"
 import {Navigate} from "react-router-dom";
 import {logIn, setErrorMessage} from "../../redux/authSlice";
-import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks/reduxToolkitHooks";
 
 type LoginValuesType = {
     login: string

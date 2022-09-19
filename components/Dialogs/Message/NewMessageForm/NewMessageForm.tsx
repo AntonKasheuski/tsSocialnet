@@ -2,7 +2,7 @@ import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import s from "./NewMessageForm.module.css"
 import {addMessage} from "../../../../redux/dialogsSllice";
-import {useAppDispatch} from "../../../../hooks/hooks";
+import {useAppDispatch} from "../../../../hooks/reduxToolkitHooks";
 
 
 const validate = (values: { newMessageText: string }) => {

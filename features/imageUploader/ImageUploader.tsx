@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ImageUploading, {ImageListType, ImageType} from 'react-images-uploading';
 import {updatePhoto} from "../../redux/profileSlice";
-import {useAppDispatch} from "../../hooks/hooks";
+import {useAppDispatch} from "../../hooks/reduxToolkitHooks";
 
 export const ImageUploader = () => {
     const dispatch = useAppDispatch()

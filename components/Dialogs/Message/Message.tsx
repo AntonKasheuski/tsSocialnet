@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './../Dialogs.module.css';
 import {NewMessageForm} from "./NewMessageForm/NewMessageForm";
-import {useAppSelector} from "../../../hooks/hooks";
+import {useAppSelector} from "../../../hooks/reduxToolkitHooks";
 
 export const Message = () => {
     const messages = useAppSelector(state => state.messagesPage.messages)

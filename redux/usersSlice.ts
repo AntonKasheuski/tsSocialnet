@@ -5,6 +5,7 @@ import {RootState} from "./rtk-store";
 type GetSelectedPageUsersInputType = {
     pageNumber: number,
     pageSize: number,
+    showFollowedUsers: boolean,
 }
 type GetPageUsersReturnType = {
     items: UserType[],
@@ -19,8 +20,14 @@ type ThunkReturnType<T = {}> = {
 
 export const getPageUsers = createAsyncThunk(
     'users/getSelectedPageUsers',
-    async ({pageNumber, pageSize}: GetSelectedPageUsersInputType) => {
-        return await usersAPI.getUsers(pageNumber, pageSize) as GetPageUsersReturnType
+    async ({pageNumber, pageSize, showFollowedUsers}: GetSelectedPageUsersInputType) => {
+        return await usersAPI.getUsers(pageNumber, pageSize, showFollowedUsers) as GetPageUsersReturnType
+    }
+)
+export const getUsersForSearch = createAsyncThunk(
+    'users/getUsersForSearch',
+    async (term: string) => {
+        return await usersAPI.getUsersForSearch(term) as GetPageUsersReturnType
     }
 )
 export const toggleFollowUser = createAsyncThunk(
@@ -37,7 +44,6 @@ export const toggleFollowUser = createAsyncThunk(
     }
 )
 
-
 type UserPhotosType = {
     small: string
     large: string
@@ -50,6 +56,8 @@ export type UserType = {
     followed: boolean
 }
 export type UsersPageType = {
+    usersFromSearching: UserType[]
+    searchingFetching: boolean
     users: UserType[]
     pageSize: number
     totalUsersCount: number
@@ -59,6 +67,8 @@ export type UsersPageType = {
 }
 
 const initialState: UsersPageType = {
+    usersFromSearching: [],
+    searchingFetching: false,
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
@@ -70,7 +80,11 @@ const initialState: UsersPageType = {
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {},
+    reducers: {
+        clearUsersFromSearching: (state) => {
+            state.usersFromSearching = []
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getPageUsers.pending, (state) => {
@@ -81,6 +95,13 @@ export const usersSlice = createSlice({
                 state.users = action.payload.items
                 state.totalUsersCount = action.payload.totalCount
                 state.currentPage = action.meta.arg.pageNumber
+            })
+            .addCase(getUsersForSearch.pending, (state) => {
+                state.searchingFetching = true
+            })
+            .addCase(getUsersForSearch.fulfilled, (state, action) => {
+                state.searchingFetching = false
+                state.usersFromSearching = action.payload.items
             })
             .addCase(toggleFollowUser.pending, (state, {meta}) => {
                 state.followingInProgressArray.push(meta.arg)
@@ -95,5 +116,7 @@ export const usersSlice = createSlice({
             })
     }
 })
+
+export const {clearUsersFromSearching} = usersSlice.actions
 
 export default usersSlice.reducer
