@@ -76,6 +76,7 @@ export type ProfilePageType = {
     currentProfile: CurrentProfileType
     status: string
     isDataLoaded: boolean
+    isStatusLoaded: boolean
 }
 
 const initialState: ProfilePageType = {
@@ -136,7 +137,8 @@ const initialState: ProfilePageType = {
         status: "",
     },
     status: "",
-    isDataLoaded: false
+    isDataLoaded: false,
+    isStatusLoaded: false
 }
 
 export const profileSlice = createSlice({
@@ -166,10 +168,11 @@ export const profileSlice = createSlice({
         builder
             .addCase(setUser.fulfilled, (state, action) => {
                 state.profile = action.payload
+                state.isDataLoaded = true
             })
             .addCase(getStatus.fulfilled, (state, action) => {
                 state.status = action.payload
-                state.isDataLoaded = true
+                state.isStatusLoaded = true
             })
             .addCase(updateStatus.fulfilled, (state, action) => {
                 if (action.payload.resultCode === 0) {
@@ -179,11 +182,9 @@ export const profileSlice = createSlice({
             })
             .addCase(updatePhoto.fulfilled, (state, action) => {
                 if (action.payload.resultCode === 0) {
-                    console.log(action)
                     state.profile.photos.large = action.payload.data.photos.large
                     state.currentProfile.photo = action.payload.data.photos.large
                 }
-                console.log(state)
             })
     }
 })

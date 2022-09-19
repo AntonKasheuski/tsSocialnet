@@ -9,12 +9,14 @@ const ProfileCard = () => {
     const userName = useAppSelector(state => state.profilePage.currentProfile.fullName)
     const userStatus = useAppSelector(state => state.profilePage.currentProfile.status)
     const isDataLoaded = useAppSelector(state => state.profilePage.isDataLoaded)
+    const isStatusLoaded = useAppSelector(state => state.profilePage.isStatusLoaded)
     const dispatch = useAppDispatch()
 
-
     useEffect(() => {
-        dispatch(setCurrentProfile())
-    }, [dispatch, isDataLoaded])
+        if (isDataLoaded && isStatusLoaded) {
+            dispatch(setCurrentProfile())
+        }
+    }, [dispatch, isDataLoaded, isStatusLoaded])
 
     return (
         <div className={s.main}>

@@ -8,6 +8,7 @@ import {ImageUploader} from "../../features/imageUploader/ImageUploader";
 
 export function Profile() {
     const isAuth = useAppSelector(state => state.auth.isAuth)
+    const currentUserId = useAppSelector(state => state.profilePage.currentProfile.userId)
     const dispatch = useAppDispatch()
 
     const location = useLocation()
@@ -25,8 +26,8 @@ export function Profile() {
     return (
         <div>
             <ProfileInfo/>
-            <ProfileStatus/>
-            <ImageUploader/>
+            {currentUserId === +userId && <ImageUploader/>}
+            <ProfileStatus userId={userId}/>
         </div>
     )
 }

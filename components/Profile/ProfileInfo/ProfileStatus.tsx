@@ -2,8 +2,9 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 import {updateStatus} from "../../../redux/profileSlice";
 
-export const ProfileStatus = () => {
+export const ProfileStatus = ({userId}: {userId: string}) => {
     const status = useAppSelector(state => state.profilePage.status)
+    const currentUserId = useAppSelector(state => state.profilePage.currentProfile.userId)
     const dispatch = useAppDispatch()
 
     const [editMode, setEditMode] = useState(false)
@@ -14,7 +15,7 @@ export const ProfileStatus = () => {
     }, [status])
 
     const activateEditMode = () => {
-        setEditMode(true)
+        currentUserId === +userId && setEditMode(true)
     }
     const deactivateEditMode = () => {
         setEditMode(false)
