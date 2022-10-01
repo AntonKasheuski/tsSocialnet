@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {usersAPI} from "../api/api";
+import {usersAPI} from "../api/users-api";
 import {RootState} from "./rtk-store";
 
 type GetSelectedPageUsersInputType = {

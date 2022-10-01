@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {authAPI} from "../api/api";
+import {authAPI} from "../api/auth-api";
 
 type LogInInputType = {
     email: string,

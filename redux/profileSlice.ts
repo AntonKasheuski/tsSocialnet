@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {profileAPI} from "../api/api";
+import {profileAPI} from "../api/profile-api";
 
 type ThunkReturnType<T = {}> = {
     data: T,
