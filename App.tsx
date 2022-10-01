@@ -15,6 +15,7 @@ import {Profile} from "./components/Profile/Profile";
 import {authorizationCheck} from "./redux/authSlice";
 import {getStatus, setUser} from "./redux/profileSlice";
 import {Posts} from "./components/Posts/Posts";
+import {ChatPage} from "./components/Chat/ChatPage";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                     <Route path="/profile/*" element={<Profile/>}/>
                     <Route path="/dialogs" element={<Dialogs/>}/>
                     <Route path="/users" element={<UsersPage/>}/>
+                    <Route path="/chat" element={<ChatPage/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>

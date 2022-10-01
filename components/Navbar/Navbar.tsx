@@ -21,6 +21,7 @@ export function Navbar() {
         {page: 'profile', link: '/profile/' + currentUserId, name: 'Profile'},
         {page: 'dialogs', link: '/dialogs', name: 'Messages'},
         {page: 'users', link: '/users', name: 'Users'},
+        {page: 'chat', link: '/chat', name: 'Chat'},
         {page: 'news', link: '/news', name: 'News'},
         {page: 'music', link: '/music', name: 'Music'},
         {page: 'settings', link: '/settings', name: 'Settings'},
