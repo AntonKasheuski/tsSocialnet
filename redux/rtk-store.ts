@@ -3,6 +3,7 @@ import authReducer from "./authSlice";
 import dialogsReducer from "./dialogsSllice";
 import profileReducer from "./profileSlice";
 import usersReducer from "./usersSlice";
+import chatReducer from "./chatSlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         messagesPage: dialogsReducer,
         profilePage: profileReducer,
         usersPage: usersReducer,
+        chatPage: chatReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
