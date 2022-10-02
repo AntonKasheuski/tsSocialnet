@@ -47,15 +47,6 @@ export const chatSlice = createSlice({
         messagesReceived: (state, action: PayloadAction<{ messages: ChatMessageType[] }>) => {
             state.messages = action.payload.messages
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            // .addCase(authorizationCheck.pending, (state) => {
-            //     !state.isFetching && (state.isFetching = true)
-            // })
-            .addCase(startMessagesListening.fulfilled, (state, action) => {
-
-            })
     }
 })
 
